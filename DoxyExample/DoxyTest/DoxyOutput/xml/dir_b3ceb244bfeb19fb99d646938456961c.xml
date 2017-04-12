@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="dir_b3ceb244bfeb19fb99d646938456961c" kind="dir">
+    <compoundname>DoxyTest</compoundname>
+    <innerfile refid="_classes_8cpp">Classes.cpp</innerfile>
+    <innerfile refid="_classes_8h">Classes.h</innerfile>
+    <innerfile refid="_doxy_test_8cpp">DoxyTest.cpp</innerfile>
+    <innerfile refid="stdafx_8cpp">stdafx.cpp</innerfile>
+    <innerfile refid="stdafx_8h">stdafx.h</innerfile>
+    <innerfile refid="targetver_8h">targetver.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="DoxyTest/"/>
+  </compounddef>
+</doxygen>

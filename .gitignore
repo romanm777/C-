@@ -1,0 +1,13 @@
+ipch
+*.opendb
+*.db
+*.vspx
+*.filters
+*.user
+*.VC
+*.suo
+*.vsp
+*.psess
+.vs
+x64
+Debug

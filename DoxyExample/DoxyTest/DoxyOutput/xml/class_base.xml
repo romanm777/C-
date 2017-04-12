@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="class_base" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>Base</compoundname>
+    <derivedcompoundref refid="class_derived_one" prot="public" virt="non-virtual">DerivedOne</derivedcompoundref>
+    <derivedcompoundref refid="class_derived_two" prot="public" virt="non-virtual">DerivedTwo</derivedcompoundref>
+    <includes refid="_classes_8h" local="no">Classes.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>Base::Base</definition>
+        <argsstring>()</argsstring>
+        <name>Base</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="61" column="1" bodyfile="DoxyTest/Classes.h" bodystart="61" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="class_base_1ace5096ac7dfb41f2577321923e3048bf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void Base::method_a</definition>
+        <argsstring>() const =0</argsstring>
+        <name>method_a</name>
+        <reimplementedby refid="class_derived_one_1a2843e6e6fd03fa84efda261cd1bbc10d">method_a</reimplementedby>
+        <reimplementedby refid="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d">method_a</reimplementedby>
+        <reimplementedby refid="class_derived_three_1a74d2afff499ae551a424aa5d1da14620">method_a</reimplementedby>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="70" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="class_base_1a87ec2d3dcffa1d22d4fe4f651f625d49" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void Base::set_external</definition>
+        <argsstring>(External *ex)=0</argsstring>
+        <name>set_external</name>
+        <reimplementedby refid="class_derived_one_1aa98db10f4b7ca15905aa82d942afe51b">set_external</reimplementedby>
+        <reimplementedby refid="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913">set_external</reimplementedby>
+        <param>
+          <type><ref refid="class_external" kindref="compound">External</ref> *</type>
+          <declname>ex</declname>
+        </param>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="79" column="1"/>
+        <referencedby refid="_doxy_test_8cpp_1ae66f6b31b5ad750f1fe042a706a4e3d4" compoundref="_doxy_test_8cpp" startline="7" endline="25">main</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="class_base" kindref="compound">Base</ref> class Level 1 class. <ref refid="class_base" kindref="compound">Base</ref> class description. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>DerivedThree</label>
+        <link refid="class_derived_three"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="0">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="1">
+        <label>DerivedOne</label>
+        <link refid="class_derived_one"/>
+        <childnode refid="0" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>DerivedTwo</label>
+        <link refid="class_derived_two"/>
+        <childnode refid="0" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="4">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+    </collaborationgraph>
+    <location file="DoxyTest/Classes.h" line="59" column="1" bodyfile="DoxyTest/Classes.h" bodystart="58" bodyend="80"/>
+    <listofallmembers>
+      <member refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" prot="public" virt="non-virtual"><scope>Base</scope><name>Base</name></member>
+      <member refid="class_base_1ace5096ac7dfb41f2577321923e3048bf" prot="public" virt="pure-virtual"><scope>Base</scope><name>method_a</name></member>
+      <member refid="class_base_1a87ec2d3dcffa1d22d4fe4f651f625d49" prot="public" virt="pure-virtual"><scope>Base</scope><name>set_external</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

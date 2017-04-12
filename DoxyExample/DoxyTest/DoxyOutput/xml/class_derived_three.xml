@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="class_derived_three" kind="class" language="C++" prot="public">
+    <compoundname>DerivedThree</compoundname>
+    <basecompoundref refid="class_derived_two" prot="public" virt="non-virtual">DerivedTwo</basecompoundref>
+    <includes refid="_classes_8h" local="no">Classes.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_derived_three_1a7787b8ff6ade268d734edcdea3df5a2b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>DerivedThree::DerivedThree</definition>
+        <argsstring>()</argsstring>
+        <name>DerivedThree</name>
+        <briefdescription>
+<para>A constructor. </para>        </briefdescription>
+        <detaileddescription>
+<para>A more elaborate description of the constructor. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="175" column="1" bodyfile="DoxyTest/Classes.h" bodystart="175" bodyend="175"/>
+      </memberdef>
+      <memberdef kind="function" id="class_derived_three_1a74d2afff499ae551a424aa5d1da14620" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void DerivedThree::method_a</definition>
+        <argsstring>() const</argsstring>
+        <name>method_a</name>
+        <reimplements refid="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d">method_a</reimplements>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="184" column="1" bodyfile="DoxyTest/Classes.h" bodystart="184" bodyend="187"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="class_derived_three" kindref="compound">DerivedThree</ref> class Level 3 class. <ref refid="class_base" kindref="compound">Base</ref> class description. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="10">
+        <label>DerivedThree</label>
+        <link refid="class_derived_three"/>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="11">
+        <label>DerivedTwo</label>
+        <link refid="class_derived_two"/>
+        <childnode refid="12" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="13">
+        <label>DerivedThree</label>
+        <link refid="class_derived_three"/>
+        <childnode refid="14" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="16">
+        <label>External</label>
+        <link refid="class_external"/>
+      </node>
+      <node id="14">
+        <label>DerivedTwo</label>
+        <link refid="class_derived_two"/>
+        <childnode refid="15" relation="public-inheritance">
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+pex</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="DoxyTest/Classes.h" line="169" column="1" bodyfile="DoxyTest/Classes.h" bodystart="168" bodyend="188"/>
+    <listofallmembers>
+      <member refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" prot="public" virt="non-virtual"><scope>DerivedThree</scope><name>Base</name></member>
+      <member refid="class_derived_three_1a7787b8ff6ade268d734edcdea3df5a2b" prot="public" virt="non-virtual"><scope>DerivedThree</scope><name>DerivedThree</name></member>
+      <member refid="class_derived_two_1a9a3a078cc0cecad09409c8f812068b4c" prot="public" virt="non-virtual"><scope>DerivedThree</scope><name>DerivedTwo</name></member>
+      <member refid="class_derived_three_1a74d2afff499ae551a424aa5d1da14620" prot="public" virt="virtual"><scope>DerivedThree</scope><name>method_a</name></member>
+      <member refid="class_derived_two_1a802d77367aae0f23c503def0befd6a88" prot="public" virt="non-virtual"><scope>DerivedThree</scope><name>pex</name></member>
+      <member refid="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913" prot="public" virt="virtual"><scope>DerivedThree</scope><name>set_external</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

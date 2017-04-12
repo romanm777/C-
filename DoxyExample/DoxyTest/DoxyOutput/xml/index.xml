@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.13">
+  <compound refid="class_base" kind="class"><name>Base</name>
+    <member refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" kind="function"><name>Base</name></member>
+    <member refid="class_base_1ace5096ac7dfb41f2577321923e3048bf" kind="function"><name>method_a</name></member>
+    <member refid="class_base_1a87ec2d3dcffa1d22d4fe4f651f625d49" kind="function"><name>set_external</name></member>
+  </compound>
+  <compound refid="class_derived_one" kind="class"><name>DerivedOne</name>
+    <member refid="class_derived_one_1aa55e1fcdabd28d0520ec6e68d530cc77" kind="variable"><name>pex</name></member>
+    <member refid="class_derived_one_1a10e249e537ac6388b0b1662a3dfea8f7" kind="function"><name>DerivedOne</name></member>
+    <member refid="class_derived_one_1a2843e6e6fd03fa84efda261cd1bbc10d" kind="function"><name>method_a</name></member>
+    <member refid="class_derived_one_1aa98db10f4b7ca15905aa82d942afe51b" kind="function"><name>set_external</name></member>
+  </compound>
+  <compound refid="class_derived_three" kind="class"><name>DerivedThree</name>
+    <member refid="class_derived_three_1a7787b8ff6ade268d734edcdea3df5a2b" kind="function"><name>DerivedThree</name></member>
+    <member refid="class_derived_three_1a74d2afff499ae551a424aa5d1da14620" kind="function"><name>method_a</name></member>
+  </compound>
+  <compound refid="class_derived_two" kind="class"><name>DerivedTwo</name>
+    <member refid="class_derived_two_1a802d77367aae0f23c503def0befd6a88" kind="variable"><name>pex</name></member>
+    <member refid="class_derived_two_1a9a3a078cc0cecad09409c8f812068b4c" kind="function"><name>DerivedTwo</name></member>
+    <member refid="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d" kind="function"><name>method_a</name></member>
+    <member refid="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913" kind="function"><name>set_external</name></member>
+  </compound>
+  <compound refid="class_external" kind="class"><name>External</name>
+    <member refid="class_external_1ad2872b94971bb19971df29b1c04036fc" kind="function"><name>External</name></member>
+    <member refid="class_external_1a6bda85aa1f6f1396469261bd13d39e72" kind="function"><name>method_external</name></member>
+  </compound>
+  <compound refid="class_ext_implement" kind="class"><name>ExtImplement</name>
+    <member refid="class_ext_implement_1a298c71d0ba5e16fd571dffeaccde6902" kind="function"><name>ExtImplement</name></member>
+    <member refid="class_ext_implement_1a5f41afb83e49e92542b031aecfd097a9" kind="function"><name>method_external</name></member>
+  </compound>
+  <compound refid="_classes_8cpp" kind="file"><name>Classes.cpp</name>
+  </compound>
+  <compound refid="_classes_8h" kind="file"><name>Classes.h</name>
+  </compound>
+  <compound refid="_doxy_test_8cpp" kind="file"><name>DoxyTest.cpp</name>
+    <member refid="_doxy_test_8cpp_1ae66f6b31b5ad750f1fe042a706a4e3d4" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="stdafx_8cpp" kind="file"><name>stdafx.cpp</name>
+  </compound>
+  <compound refid="stdafx_8h" kind="file"><name>stdafx.h</name>
+  </compound>
+  <compound refid="targetver_8h" kind="file"><name>targetver.h</name>
+  </compound>
+  <compound refid="dir_b3ceb244bfeb19fb99d646938456961c" kind="dir"><name>DoxyTest</name>
+  </compound>
+</doxygenindex>

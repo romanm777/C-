@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="_classes_8h" kind="file" language="C++">
+    <compoundname>Classes.h</compoundname>
+    <includes local="no">iostream</includes>
+    <includedby refid="_classes_8cpp" local="yes">DoxyTest/Classes.cpp</includedby>
+    <includedby refid="_doxy_test_8cpp" local="yes">DoxyTest/DoxyTest.cpp</includedby>
+    <incdepgraph>
+      <node id="9">
+        <label>DoxyTest/Classes.h</label>
+        <link refid="_classes_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>iostream</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="12">
+        <label>DoxyTest/Classes.cpp</label>
+        <link refid="_classes_8cpp"/>
+      </node>
+      <node id="11">
+        <label>DoxyTest/Classes.h</label>
+        <link refid="_classes_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>DoxyTest/DoxyTest.cpp</label>
+        <link refid="_doxy_test_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="class_external" prot="public">External</innerclass>
+    <innerclass refid="class_ext_implement" prot="public">ExtImplement</innerclass>
+    <innerclass refid="class_base" prot="public">Base</innerclass>
+    <innerclass refid="class_derived_one" prot="public">DerivedOne</innerclass>
+    <innerclass refid="class_derived_two" prot="public">DerivedTwo</innerclass>
+    <innerclass refid="class_derived_three" prot="public">DerivedThree</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;iostream&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="class_external" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_external" kindref="compound">External</ref></highlight></codeline>
+<codeline lineno="10"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="13"></codeline>
+<codeline lineno="16" refid="class_external_1ad2872b94971bb19971df29b1c04036fc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_external_1ad2872b94971bb19971df29b1c04036fc" kindref="member">External</ref>(<sp/>)<sp/>{}</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_external_1a6bda85aa1f6f1396469261bd13d39e72" kindref="member">method_external</ref>(<sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="class_ext_implement" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_ext_implement" kindref="compound">ExtImplement</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="class_external" kindref="compound">External</ref></highlight></codeline>
+<codeline lineno="33"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="36"></codeline>
+<codeline lineno="39" refid="class_ext_implement_1a298c71d0ba5e16fd571dffeaccde6902" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_ext_implement_1a298c71d0ba5e16fd571dffeaccde6902" kindref="member">ExtImplement</ref>(<sp/>)<sp/>{}</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"></codeline>
+<codeline lineno="48" refid="class_ext_implement_1a5f41afb83e49e92542b031aecfd097a9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_ext_implement_1a5f41afb83e49e92542b031aecfd097a9" kindref="member">method_external</ref>(<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="49"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;ExtImplement::method_external<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>std::endl;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="class_base" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_base" kindref="compound">Base</ref></highlight></codeline>
+<codeline lineno="59"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="61" refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" kindref="member">Base</ref>(<sp/>)<sp/>{}</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>method_a(<sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>set_external(<sp/><ref refid="class_external" kindref="compound">External</ref>*<sp/>ex<sp/>)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="class_derived_one" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_derived_one" kindref="compound">DerivedOne</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="class_base" kindref="compound">Base</ref></highlight></codeline>
+<codeline lineno="87"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="90"></codeline>
+<codeline lineno="93" refid="class_derived_one_1a10e249e537ac6388b0b1662a3dfea8f7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_derived_one_1a10e249e537ac6388b0b1662a3dfea8f7" kindref="member">DerivedOne</ref>(<sp/>)<sp/>{}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"></codeline>
+<codeline lineno="102" refid="class_derived_one_1a2843e6e6fd03fa84efda261cd1bbc10d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_derived_one_1a2843e6e6fd03fa84efda261cd1bbc10d" kindref="member">method_a</ref>(<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="103"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;DerivedOne::method_a<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>std::endl;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"></codeline>
+<codeline lineno="114" refid="class_derived_one_1aa98db10f4b7ca15905aa82d942afe51b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_derived_one_1aa98db10f4b7ca15905aa82d942afe51b" kindref="member">set_external</ref>(<sp/><ref refid="class_external" kindref="compound">External</ref>*<sp/>ex<sp/>)</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pex<sp/>=<sp/>ex;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="class_derived_one_1aa55e1fcdabd28d0520ec6e68d530cc77" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_external" kindref="compound">External</ref>*<sp/><ref refid="class_derived_one_1aa55e1fcdabd28d0520ec6e68d530cc77" kindref="member">pex</ref>;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127" refid="class_derived_two" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_derived_two" kindref="compound">DerivedTwo</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="class_base" kindref="compound">Base</ref></highlight></codeline>
+<codeline lineno="128"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="131"></codeline>
+<codeline lineno="134" refid="class_derived_two_1a9a3a078cc0cecad09409c8f812068b4c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_derived_two_1a9a3a078cc0cecad09409c8f812068b4c" kindref="member">DerivedTwo</ref>(<sp/>)<sp/>{}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"></codeline>
+<codeline lineno="143" refid="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d" kindref="member">method_a</ref>(<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="144"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;DerivedTwo::method_a<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>std::endl;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"></codeline>
+<codeline lineno="155" refid="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913" kindref="member">set_external</ref>(<sp/><ref refid="class_external" kindref="compound">External</ref>*<sp/>ex<sp/>)</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pex<sp/>=<sp/>ex;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="class_derived_two_1a802d77367aae0f23c503def0befd6a88" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_external" kindref="compound">External</ref>*<sp/><ref refid="class_derived_two_1a802d77367aae0f23c503def0befd6a88" kindref="member">pex</ref>;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168" refid="class_derived_three" refkind="compound"><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_derived_three" kindref="compound">DerivedThree</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="class_derived_two" kindref="compound">DerivedTwo</ref></highlight></codeline>
+<codeline lineno="169"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="172"></codeline>
+<codeline lineno="175" refid="class_derived_three_1a7787b8ff6ade268d734edcdea3df5a2b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_derived_three_1a7787b8ff6ade268d734edcdea3df5a2b" kindref="member">DerivedThree</ref>(<sp/>)<sp/>{}</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"></codeline>
+<codeline lineno="184" refid="class_derived_three_1a74d2afff499ae551a424aa5d1da14620" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_derived_three_1a74d2afff499ae551a424aa5d1da14620" kindref="member">method_a</ref>(<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="185"><highlight class="keyword"><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;DerivedThree::method_a<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>std::endl;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="188"><highlight class="normal">};</highlight></codeline>
+    </programlisting>
+    <location file="DoxyTest/Classes.h"/>
+  </compounddef>
+</doxygen>

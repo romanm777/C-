@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="class_derived_one" kind="class" language="C++" prot="public">
+    <compoundname>DerivedOne</compoundname>
+    <basecompoundref refid="class_base" prot="public" virt="non-virtual">Base</basecompoundref>
+    <includes refid="_classes_8h" local="no">Classes.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_derived_one_1aa55e1fcdabd28d0520ec6e68d530cc77" prot="public" static="no" mutable="no">
+        <type><ref refid="class_external" kindref="compound">External</ref> *</type>
+        <definition>External* DerivedOne::pex</definition>
+        <argsstring></argsstring>
+        <name>pex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="119" column="1" bodyfile="DoxyTest/Classes.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_derived_one_1a10e249e537ac6388b0b1662a3dfea8f7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>DerivedOne::DerivedOne</definition>
+        <argsstring>()</argsstring>
+        <name>DerivedOne</name>
+        <briefdescription>
+<para>A constructor. </para>        </briefdescription>
+        <detaileddescription>
+<para>A more elaborate description of the constructor. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="93" column="1" bodyfile="DoxyTest/Classes.h" bodystart="93" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="class_derived_one_1a2843e6e6fd03fa84efda261cd1bbc10d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void DerivedOne::method_a</definition>
+        <argsstring>() const</argsstring>
+        <name>method_a</name>
+        <reimplements refid="class_base_1ace5096ac7dfb41f2577321923e3048bf">method_a</reimplements>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="102" column="1" bodyfile="DoxyTest/Classes.h" bodystart="102" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="class_derived_one_1aa98db10f4b7ca15905aa82d942afe51b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void DerivedOne::set_external</definition>
+        <argsstring>(External *ex)</argsstring>
+        <name>set_external</name>
+        <reimplements refid="class_base_1a87ec2d3dcffa1d22d4fe4f651f625d49">set_external</reimplements>
+        <param>
+          <type><ref refid="class_external" kindref="compound">External</ref> *</type>
+          <declname>ex</declname>
+        </param>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="114" column="1" bodyfile="DoxyTest/Classes.h" bodystart="114" bodyend="117"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="class_derived_one" kindref="compound">DerivedOne</ref> class Level 2 class. <ref refid="class_base" kindref="compound">Base</ref> class description. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="6">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="5">
+        <label>DerivedOne</label>
+        <link refid="class_derived_one"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="8">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="7">
+        <label>DerivedOne</label>
+        <link refid="class_derived_one"/>
+        <childnode refid="8" relation="public-inheritance">
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>+pex</edgelabel>
+        </childnode>
+      </node>
+      <node id="9">
+        <label>External</label>
+        <link refid="class_external"/>
+      </node>
+    </collaborationgraph>
+    <location file="DoxyTest/Classes.h" line="87" column="1" bodyfile="DoxyTest/Classes.h" bodystart="86" bodyend="120"/>
+    <listofallmembers>
+      <member refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" prot="public" virt="non-virtual"><scope>DerivedOne</scope><name>Base</name></member>
+      <member refid="class_derived_one_1a10e249e537ac6388b0b1662a3dfea8f7" prot="public" virt="non-virtual"><scope>DerivedOne</scope><name>DerivedOne</name></member>
+      <member refid="class_derived_one_1a2843e6e6fd03fa84efda261cd1bbc10d" prot="public" virt="virtual"><scope>DerivedOne</scope><name>method_a</name></member>
+      <member refid="class_derived_one_1aa55e1fcdabd28d0520ec6e68d530cc77" prot="public" virt="non-virtual"><scope>DerivedOne</scope><name>pex</name></member>
+      <member refid="class_derived_one_1aa98db10f4b7ca15905aa82d942afe51b" prot="public" virt="virtual"><scope>DerivedOne</scope><name>set_external</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

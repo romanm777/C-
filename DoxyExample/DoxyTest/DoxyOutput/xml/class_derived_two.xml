@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="class_derived_two" kind="class" language="C++" prot="public">
+    <compoundname>DerivedTwo</compoundname>
+    <basecompoundref refid="class_base" prot="public" virt="non-virtual">Base</basecompoundref>
+    <derivedcompoundref refid="class_derived_three" prot="public" virt="non-virtual">DerivedThree</derivedcompoundref>
+    <includes refid="_classes_8h" local="no">Classes.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_derived_two_1a802d77367aae0f23c503def0befd6a88" prot="public" static="no" mutable="no">
+        <type><ref refid="class_external" kindref="compound">External</ref> *</type>
+        <definition>External* DerivedTwo::pex</definition>
+        <argsstring></argsstring>
+        <name>pex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="160" column="1" bodyfile="DoxyTest/Classes.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_derived_two_1a9a3a078cc0cecad09409c8f812068b4c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>DerivedTwo::DerivedTwo</definition>
+        <argsstring>()</argsstring>
+        <name>DerivedTwo</name>
+        <briefdescription>
+<para>A constructor. </para>        </briefdescription>
+        <detaileddescription>
+<para>A more elaborate description of the constructor. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="134" column="1" bodyfile="DoxyTest/Classes.h" bodystart="134" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void DerivedTwo::method_a</definition>
+        <argsstring>() const</argsstring>
+        <name>method_a</name>
+        <reimplements refid="class_base_1ace5096ac7dfb41f2577321923e3048bf">method_a</reimplements>
+        <reimplementedby refid="class_derived_three_1a74d2afff499ae551a424aa5d1da14620">method_a</reimplementedby>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="143" column="1" bodyfile="DoxyTest/Classes.h" bodystart="143" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void DerivedTwo::set_external</definition>
+        <argsstring>(External *ex)</argsstring>
+        <name>set_external</name>
+        <reimplements refid="class_base_1a87ec2d3dcffa1d22d4fe4f651f625d49">set_external</reimplements>
+        <param>
+          <type><ref refid="class_external" kindref="compound">External</ref> *</type>
+          <declname>ex</declname>
+        </param>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="155" column="1" bodyfile="DoxyTest/Classes.h" bodystart="155" bodyend="158"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="class_derived_two" kindref="compound">DerivedTwo</ref> class Level 2 class. <ref refid="class_base" kindref="compound">Base</ref> class description. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="19">
+        <label>DerivedThree</label>
+        <link refid="class_derived_three"/>
+        <childnode refid="17" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="17">
+        <label>DerivedTwo</label>
+        <link refid="class_derived_two"/>
+        <childnode refid="18" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="21">
+        <label>Base</label>
+        <link refid="class_base"/>
+      </node>
+      <node id="22">
+        <label>External</label>
+        <link refid="class_external"/>
+      </node>
+      <node id="20">
+        <label>DerivedTwo</label>
+        <link refid="class_derived_two"/>
+        <childnode refid="21" relation="public-inheritance">
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+pex</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="DoxyTest/Classes.h" line="128" column="1" bodyfile="DoxyTest/Classes.h" bodystart="127" bodyend="161"/>
+    <listofallmembers>
+      <member refid="class_base_1a5ffe0568374d8b9b4c4ec32953fd6453" prot="public" virt="non-virtual"><scope>DerivedTwo</scope><name>Base</name></member>
+      <member refid="class_derived_two_1a9a3a078cc0cecad09409c8f812068b4c" prot="public" virt="non-virtual"><scope>DerivedTwo</scope><name>DerivedTwo</name></member>
+      <member refid="class_derived_two_1ae83bc07728d0af09413c6eb91c840e1d" prot="public" virt="virtual"><scope>DerivedTwo</scope><name>method_a</name></member>
+      <member refid="class_derived_two_1a802d77367aae0f23c503def0befd6a88" prot="public" virt="non-virtual"><scope>DerivedTwo</scope><name>pex</name></member>
+      <member refid="class_derived_two_1a84a5387e229abb415d74fb4ed8a5d913" prot="public" virt="virtual"><scope>DerivedTwo</scope><name>set_external</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

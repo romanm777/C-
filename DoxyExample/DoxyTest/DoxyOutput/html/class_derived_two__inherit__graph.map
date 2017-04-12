@@ -1,0 +1,4 @@
+<map id="DerivedTwo" name="DerivedTwo">
+<area shape="rect" id="node3" href="$class_derived_three.html" title="{DerivedThree\n||+ DerivedThree()\l+ method_a()\l}" alt="" coords="5,315,121,407"/>
+<area shape="rect" id="node2" href="$class_base.html" title="{Base\n||+ Base()\l+ method_a()\l+ set_external()\l}" alt="" coords="7,5,120,112"/>
+</map>

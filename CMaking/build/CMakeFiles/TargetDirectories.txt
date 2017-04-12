@@ -1,0 +1,3 @@
+C:/Users/mrychko/_Work/C++/CMaking/build/CMakeFiles/hello.dir
+C:/Users/mrychko/_Work/C++/CMaking/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/mrychko/_Work/C++/CMaking/build/CMakeFiles/ZERO_CHECK.dir

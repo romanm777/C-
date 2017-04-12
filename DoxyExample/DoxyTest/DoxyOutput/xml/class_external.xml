@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.13">
+  <compounddef id="class_external" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>External</compoundname>
+    <derivedcompoundref refid="class_ext_implement" prot="public" virt="non-virtual">ExtImplement</derivedcompoundref>
+    <includes refid="_classes_8h" local="no">Classes.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_external_1ad2872b94971bb19971df29b1c04036fc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>External::External</definition>
+        <argsstring>()</argsstring>
+        <name>External</name>
+        <briefdescription>
+<para>A constructor. </para>        </briefdescription>
+        <detaileddescription>
+<para>A more elaborate description of the constructor. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="16" column="1" bodyfile="DoxyTest/Classes.h" bodystart="16" bodyend="16"/>
+        <references refid="class_external_1a6bda85aa1f6f1396469261bd13d39e72">method_external</references>
+      </memberdef>
+      <memberdef kind="function" id="class_external_1a6bda85aa1f6f1396469261bd13d39e72" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void External::method_external</definition>
+        <argsstring>() const =0</argsstring>
+        <name>method_external</name>
+        <reimplementedby refid="class_ext_implement_1a5f41afb83e49e92542b031aecfd097a9">method_external</reimplementedby>
+        <briefdescription>
+<para>A normal member taking two arguments and returning an integer value. </para>        </briefdescription>
+        <detaileddescription>
+<para>nparam a an integer argument. nparam s a constant character pointer. nreturn The test results nsa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar() </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="DoxyTest/Classes.h" line="25" column="1"/>
+        <referencedby refid="class_external_1ad2872b94971bb19971df29b1c04036fc" compoundref="_classes_8h" startline="16" endline="16">External</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="class_external" kindref="compound">External</ref> class Some external class. <ref refid="class_base" kindref="compound">Base</ref> class description. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="24">
+        <label>ExtImplement</label>
+        <link refid="class_ext_implement"/>
+        <childnode refid="23" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>External</label>
+        <link refid="class_external"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="25">
+        <label>External</label>
+        <link refid="class_external"/>
+      </node>
+    </collaborationgraph>
+    <location file="DoxyTest/Classes.h" line="10" column="1" bodyfile="DoxyTest/Classes.h" bodystart="9" bodyend="26"/>
+    <listofallmembers>
+      <member refid="class_external_1ad2872b94971bb19971df29b1c04036fc" prot="public" virt="non-virtual"><scope>External</scope><name>External</name></member>
+      <member refid="class_external_1a6bda85aa1f6f1396469261bd13d39e72" prot="public" virt="pure-virtual"><scope>External</scope><name>method_external</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
