@@ -5,7 +5,7 @@
 
 // mutex for mapped file
 HANDLE h_mutex;
-const std::string mutex_name( "ChatMutex" );
+TCHAR mutex_name[] = TEXT( "Local\\ChatMutex" );
 
 // event for other message pumping
 HANDLE h_event;
@@ -13,12 +13,12 @@ const std::string event_name( "FileChangeEvent" );
 
 //const std::string file_name( "C://Users//mrychko//_Work//C++//ChatTask//Chat//chat.dat" );
 const std::string quit( "QUIT" );
-std::string prev = "";
+char prev [1024] = "";
 bool update_msgs = true;
 
 
 // read/write data to the mapped file
-void process_data( bool& init, const std::string& name, const std::string& msg );
+void process_data( bool& init, bool& first, const std::string& name, const std::string& msg );
 
 // thread to pump other user's messages  
 void update_messages( );
@@ -45,6 +45,8 @@ void ChatProvider::start( )
 	// allows to read last message
 	//SetEvent( m_hevent );
 
+	bool init = true;
+
 	std::string message;
 	while ( true )
 	{
@@ -57,13 +59,13 @@ void ChatProvider::start( )
 		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
 
 		// process data
-		process_data( m_first, user_name, message );
-
-		// allows other processes to read new message
-		SetEvent( h_event );
+		process_data( init, m_first, user_name, message );
 
 		// !!! release mutex
 		ReleaseMutex( h_mutex );
+
+		// allows other processes to read new message
+		SetEvent( h_event );
 	}
 
 	//update_msgs = false;
@@ -75,17 +77,23 @@ void ChatProvider::start( )
 void ChatProvider::create_mutex( )
 {
 	// check if this is the first chat client
-	h_mutex = OpenMutex( NULL, 0, ( LPCWSTR ) mutex_name.c_str( ) );
+	h_mutex = OpenMutex( MUTEX_ALL_ACCESS, 0, mutex_name );
+	DWORD res = GetLastError( );
 
 	if ( h_mutex == NULL )
 	{
 		// creates mutex to restrict concurent access to the file
-		h_mutex = CreateMutex( NULL, FALSE, ( LPCWSTR ) mutex_name.c_str( ) );
+		h_mutex = CreateMutex( NULL, FALSE, ( LPCWSTR ) mutex_name );
 		m_first = true;
 	}
 
-	// create event to notify other processes about new message in the file
-	h_event = CreateEvent( NULL, FALSE, FALSE, ( LPCWSTR ) event_name.c_str( ) );
+	h_event = OpenEvent( SYNCHRONIZE, FALSE, ( LPCWSTR ) event_name.c_str( ) );
+
+	if ( h_event == NULL )
+	{
+		// create event to notify other processes about new message in the file
+		h_event = CreateEvent( NULL, FALSE, FALSE, ( LPCWSTR ) event_name.c_str( ) );
+	}
 }
 
 void ChatProvider::release_mutex( )
@@ -93,28 +101,38 @@ void ChatProvider::release_mutex( )
 	;
 }
 
-void process_data( bool& first, const std::string& name, const std::string& msg )
+void process_data( bool& init, bool& first, const std::string& name, const std::string& msg )
 {
 	// read current data
 	Data data;
 	if ( !first && read_shared_memory( data ) != 0 )
 		return;
 
-	// increment process count only once
+	// if this is the first iteration
+	if ( init ) 
+	{
+		init = false;
+
+		// increment process count only once
+		data.m_process_count++;
+	}
+
+	// if this is the first process 
 	if ( first )
 	{
+		// creates shared memory
 		if( create_shared_memory( ) != 0 )
 			return;
 
 		first = false;
-		data.m_process_count++;
 	}
 
 	// increment to_read count after each new message
 	data.m_to_read_count++;
 
-	data.m_last_message = name + ": " + msg + "\n";
-	prev = data.m_last_message;
+	std::string message = name + ": " + msg + "\n";
+	strcpy_s( data.m_last_message, message.c_str( ) );
+	strcpy_s( prev, data.m_last_message );
 
 	// write to mapped file
 	write_shared_memory( data );
@@ -134,10 +152,10 @@ void update_messages( )
 		Data data;
 		read_shared_memory( data );
 
-		if ( prev != data.m_last_message )
+		if ( strcmp( prev, data.m_last_message ) != 0 )
 		{
 			std::cout << data.m_last_message;
-			prev = data.m_last_message;
+			strcpy_s( prev, data.m_last_message );
 		}
 
 		if ( data.m_to_read_count != 0 )

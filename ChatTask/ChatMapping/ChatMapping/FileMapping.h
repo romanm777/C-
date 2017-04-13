@@ -12,7 +12,7 @@ struct Data
 
 	int				m_process_count;
 	int				m_to_read_count;
-	std::string		m_last_message;
+	char			m_last_message[1024];
 };
 
 int create_shared_memory( );
