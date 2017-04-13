@@ -9,7 +9,7 @@ TCHAR mutex_name[] = TEXT( "Local\\ChatMutex" );
 
 // event for other message pumping
 HANDLE h_event;
-const std::string event_name( "FileChangeEvent" );
+TCHAR event_name[] = TEXT( "Local\\FileChangeEvent" );
 
 //const std::string file_name( "C://Users//mrychko//_Work//C++//ChatTask//Chat//chat.dat" );
 const std::string quit( "QUIT" );
@@ -87,12 +87,12 @@ void ChatProvider::create_mutex( )
 		m_first = true;
 	}
 
-	h_event = OpenEvent( SYNCHRONIZE, FALSE, ( LPCWSTR ) event_name.c_str( ) );
+	h_event = OpenEvent( EVENT_MODIFY_STATE, TRUE, event_name );
 
 	if ( h_event == NULL )
 	{
 		// create event to notify other processes about new message in the file
-		h_event = CreateEvent( NULL, FALSE, FALSE, ( LPCWSTR ) event_name.c_str( ) );
+		h_event = CreateEvent( NULL, FALSE, FALSE, event_name );
 	}
 }
 
