@@ -53,10 +53,13 @@ void clean_up( )
 		return;
 
 	// decrement process count
-	data.m_process_count++;
+	data.m_process_count--;
+	data.m_to_read_count--;
 
 	// write to mapped file
 	write_shared_memory( data );
 
 	ReleaseMutex( h_mutex );
+
+	CloseHandle( hMapFile );
 }

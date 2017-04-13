@@ -5,11 +5,11 @@
 
 // mutex for mapped file
 HANDLE h_mutex;
-const std::string mutex_name( "Chat_Mutex" );
+const std::string mutex_name( "ChatMutex" );
 
 // event for other message pumping
 HANDLE h_event;
-const std::string event_name( "File_change_event" );
+const std::string event_name( "FileChangeEvent" );
 
 //const std::string file_name( "C://Users//mrychko//_Work//C++//ChatTask//Chat//chat.dat" );
 const std::string quit( "QUIT" );
@@ -42,8 +42,6 @@ void ChatProvider::start( )
 
 	std::thread update( update_messages );
 
-	bool init = true;
-
 	// allows to read last message
 	//SetEvent( m_hevent );
 
@@ -59,7 +57,7 @@ void ChatProvider::start( )
 		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
 
 		// process data
-		process_data( init, user_name, message );
+		process_data( m_first, user_name, message );
 
 		// allows other processes to read new message
 		SetEvent( h_event );
@@ -95,17 +93,20 @@ void ChatProvider::release_mutex( )
 	;
 }
 
-void process_data( bool& init, const std::string& name, const std::string& msg )
+void process_data( bool& first, const std::string& name, const std::string& msg )
 {
 	// read current data
 	Data data;
-	if ( read_shared_memory( data ) != 0 && !init )
+	if ( !first && read_shared_memory( data ) != 0 )
 		return;
 
 	// increment process count only once
-	if ( init )
+	if ( first )
 	{
-		init = false;
+		if( create_shared_memory( ) != 0 )
+			return;
+
+		first = false;
 		data.m_process_count++;
 	}
 
@@ -125,6 +126,9 @@ void update_messages( )
 	{
 		// wait for changes
 		DWORD res = WaitForSingleObject( h_event, INFINITE );
+
+		// handle to mutex
+		res = WaitForSingleObject( h_mutex, INFINITE );
 
 		// read from mapped file
 		Data data;
@@ -149,6 +153,8 @@ void update_messages( )
 
 			write_shared_memory( data );
 		}
+
+		ReleaseMutex( h_mutex );
 
 		// waits for little time and lock
 		//std::this_thread::sleep_for( std::chrono::milliseconds( 200 ) );
