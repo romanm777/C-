@@ -102,4 +102,39 @@ namespace utils
 		CloseHandle( h_attach_event );
 		CloseHandle( h_detach_event );
 	}
+
+	///// Event handlers
+	void handle_message( bool* stop )
+	{
+		while ( !( *stop ) )
+		{
+			WaitForSingleObject( h_message_event, INFINITE );
+
+			std::cout << "Message has been sent\n";
+		}
+	}
+
+	void handle_attach( bool* stop )
+	{
+		while ( !( *stop ) )
+		{
+			WaitForSingleObject( h_attach_event, INFINITE );
+
+			std::cout << "New messanger has attached.\n";
+
+			ResetEvent( h_attach_event );
+		}
+	}
+
+	void handle_detach( bool* stop )
+	{
+		while ( !( *stop ) )
+		{
+			WaitForSingleObject( h_message_event, INFINITE );
+
+			std::cout << "New messanger has detached.\n";
+
+			ResetEvent( h_detach_event );
+		}
+	}
 }

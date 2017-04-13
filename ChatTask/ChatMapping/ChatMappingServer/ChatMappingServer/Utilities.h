@@ -13,4 +13,11 @@ namespace utils
 	bool create_shared_memory( );
 
 	bool close_handles( );
+
+	///////////////////////////
+	void handle_message( bool* stop );
+
+	void handle_attach( bool* stop );
+	
+	void handle_detach( bool* stop );
 }

@@ -13,9 +13,6 @@ Server::Server( )
 
 }
 
-void handle_message( bool* stop );
-void handle_attach( bool* stop );
-void handle_detach( bool* stop );
 
 void Server::start( )
 {
@@ -49,9 +46,9 @@ void Server::start( )
 		return;
 	}
 
-	message_checker = std::thread( handle_message, &m_stop );
-	attached_checker = std::thread( handle_attach, &m_stop );
-	detached_checker = std::thread( handle_detach, &m_stop );
+	message_checker = std::thread( utils::handle_message, &m_stop );
+	attached_checker = std::thread( utils::handle_attach, &m_stop );
+	detached_checker = std::thread( utils::handle_detach, &m_stop );
 }
 
 void Server::stop( )
@@ -63,28 +60,4 @@ void Server::stop( )
 	detached_checker.join( );
 
 	utils::close_handles( );
-}
-
-void handle_message( bool* stop )
-{
-	while ( !( *stop ) )
-	{
-		;
-	}
-}
-
-void handle_attach( bool* stop )
-{
-	while ( !( *stop ) )
-	{
-		;
-	}
-}
-
-void handle_detach( bool* stop )
-{
-	while ( !( *stop ) )
-	{
-		;
-	}
 }
