@@ -5,6 +5,8 @@
 #include "ChatProvider.h"
 #include "FileMapping.h"
 
+ChatProvider chat;
+
 BOOL console_close( DWORD dwCtrlType );
 void clean_up( );
 
@@ -12,11 +14,6 @@ int main( )
 {
 	BOOL res = SetConsoleCtrlHandler( ( PHANDLER_ROUTINE ) console_close, TRUE );
 
-#if defined( _DEBUG )
-	std::cout << "SetConsoleCtrlHandler( ) has " << ( res ? "been" : "not been" ) << " added.\n";
-#endif
-
-	ChatProvider chat;
 	chat.start( );
 
 	//CloseHandle( h_mutex );
@@ -29,14 +26,12 @@ BOOL console_close( DWORD dwCtrlType )
 {
 	if ( dwCtrlType == CTRL_CLOSE_EVENT )
 	{
-		BOOL res = ReleaseMutex( h_mutex );
-
-#if defined( _DEBUG )
-		std::cout << "Mutex has " << ( res ? " been " : " not been " ) << " released.\n";
-#endif
-
 		// clean up before close
 		clean_up( );
+
+		CloseHandle( hMapFile );
+		CloseHandle( h_mutex );
+		CloseHandle( h_event );
 	}
 
 	return TRUE;
@@ -44,6 +39,8 @@ BOOL console_close( DWORD dwCtrlType )
 
 void clean_up( )
 {
+	chat.stop( );
+
 	// handle to mutex
 	DWORD res = WaitForSingleObject( h_mutex, INFINITE );
 
@@ -61,5 +58,5 @@ void clean_up( )
 
 	ReleaseMutex( h_mutex );
 
-	CloseHandle( hMapFile );
+	//CloseHandle( hMapFile );
 }

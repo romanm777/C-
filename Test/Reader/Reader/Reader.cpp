@@ -11,75 +11,66 @@
 #include <thread>
 #pragma comment(lib, "user32.lib")
 
+#include "FileMapping.h"
 
-struct Test
-{
-	Test( const double val, const int count, const std::string& name )
-		: m_value( val )
-		, m_count( count )
-		, m_name( name )
-	{
-	}
 
-	double		m_value;
-	int			m_count;
-	std::string m_name;
-};
+// mutex for mapped file
+HANDLE h_mutex;
+TCHAR mutex_name[] = TEXT( "Local\\ChatMutex" );
 
-int read_shared_memory( Test& test );
+void create_mutex( );
 
 int main()
 {
-	Test test( 0.0, 0, "" );
-	read_shared_memory( test );
+	create_mutex( );
+
+	while ( true )
+	{
+		// handle to mutex
+		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
+
+		Data data;
+		read_shared_memory( data );
+
+		std::cout << data.m_to_read_count << ", " << data.m_process_count << ", " << data.m_last_message << "\n";
+
+		ReleaseMutex( h_mutex );
+
+		std::string msg;
+		std::cin >> msg;
+
+		/////////////////// Readin
+		// handle to mutex
+		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
+
+		Data new_data;
+		read_shared_memory( data );
+
+		//
+	}
 
     return 0;
 }
 
 
-#define BUF_SIZE 1024 //256
-TCHAR szName[] = TEXT( "Local\\MyFileMappingObject" );
-TCHAR szMsg[] = TEXT( "Message from first process." );
-
-int read_shared_memory( Test& test )
+void create_mutex( )
 {
-	HANDLE hMapFile;
-	LPCTSTR pBuf;
+	// check if this is the first chat client
+	h_mutex = OpenMutex( MUTEX_ALL_ACCESS, 0, mutex_name );
+	DWORD res = GetLastError( );
 
-	hMapFile = OpenFileMapping(
-		FILE_MAP_ALL_ACCESS,   // read/write access
-		FALSE,                 // do not inherit the name
-		szName );               // name of mapping object
-
-	if ( hMapFile == NULL )
+	if ( h_mutex == NULL )
 	{
-		_tprintf( TEXT( "Could not open file mapping object (%d).\n" ),
-			GetLastError( ) );
-		return 1;
+		// creates mutex to restrict concurent access to the file
+		h_mutex = CreateMutex( NULL, FALSE, ( LPCWSTR ) mutex_name );
 	}
 
-	pBuf = ( LPTSTR ) MapViewOfFile( hMapFile, // handle to map object
-		FILE_MAP_ALL_ACCESS,  // read/write permission
-		0,
-		0,
-		BUF_SIZE );
+	/*// EVENT_MODIFY_STATE
+	h_event = OpenEvent( EVENT_MODIFY_STATE, TRUE, event_name );
 
-	if ( pBuf == NULL )
+	if ( h_event == NULL )
 	{
-		_tprintf( TEXT( "Could not map view of file (%d).\n" ),
-			GetLastError( ) );
-
-		CloseHandle( hMapFile );
-
-		return 1;
-	}
-
-	//MessageBox( NULL, pBuf, TEXT( "Process2" ), MB_OK );
-	//CopyMemory( &test, pBuf, sizeof( test ) );
-
-	BOOL res = UnmapViewOfFile( pBuf );
-
-	res = CloseHandle( hMapFile );
-
-	return 0;
+	// create event to notify other processes about new message in the file
+	h_event = CreateEvent( NULL, FALSE, FALSE, event_name );
+	}*/
 }

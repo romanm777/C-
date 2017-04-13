@@ -1,4 +1,13 @@
 #include "stdafx.h"
+
+#include <iostream>
+#include <string>
+#include <windows.h>
+
+#include <conio.h>
+#include <tchar.h>
+#include <thread>
+
 #include "FileMapping.h"
 #pragma comment(lib, "user32.lib")
 
@@ -10,6 +19,11 @@ TCHAR szMsg[] = TEXT( "Message from first process." );
 
 int create_shared_memory( )
 {
+	HANDLE h_previous = OpenFileMapping(
+		FILE_MAP_ALL_ACCESS,   // read/write access
+		FALSE,                 // do not inherit the name
+		szName );
+
 	hMapFile = CreateFileMapping(
 		INVALID_HANDLE_VALUE,    // use paging file
 		NULL,                    // default security

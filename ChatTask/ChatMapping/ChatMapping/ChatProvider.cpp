@@ -21,13 +21,22 @@ bool update_msgs = true;
 void process_data( bool& init, bool& first, const std::string& name, const std::string& msg );
 
 // thread to pump other user's messages  
-void update_messages( );
+void update_messages( bool* go_on );
 
 
 ChatProvider::ChatProvider( )
 	: m_first( false )
+	, m_continue( true )
 {
 
+}
+
+ChatProvider::~ChatProvider( )
+{
+	if ( m_message_pump.joinable( ) )
+	{
+		m_message_pump.join( );
+	}
 }
 
 void ChatProvider::start( )
@@ -40,7 +49,7 @@ void ChatProvider::start( )
 
 	std::cout << "Messages:\n";
 
-	std::thread update( update_messages );
+	m_message_pump = std::thread ( update_messages, &m_continue );
 
 	// allows to read last message
 	//SetEvent( m_hevent );
@@ -68,10 +77,17 @@ void ChatProvider::start( )
 		SetEvent( h_event );
 	}
 
-	//update_msgs = false;
-	update.join( );
-
 	release_mutex( );
+}
+
+void ChatProvider::stop( )
+{
+	m_continue = false;
+
+	if ( m_message_pump.joinable( ) )
+	{
+		m_message_pump.join( );
+	}
 }
 
 void ChatProvider::create_mutex( )
@@ -87,6 +103,7 @@ void ChatProvider::create_mutex( )
 		m_first = true;
 	}
 
+	// EVENT_MODIFY_STATE
 	h_event = OpenEvent( EVENT_MODIFY_STATE, TRUE, event_name );
 
 	if ( h_event == NULL )
@@ -138,9 +155,9 @@ void process_data( bool& init, bool& first, const std::string& name, const std::
 	write_shared_memory( data );
 }
 
-void update_messages( )
+void update_messages( bool* go_on )
 {
-	while ( true )
+	while ( *go_on )
 	{
 		// wait for changes
 		DWORD res = WaitForSingleObject( h_event, INFINITE );
@@ -163,16 +180,16 @@ void update_messages( )
 			// decrement processes to 
 			data.m_to_read_count--;
 
-			// if there is no process to read - stops message pump
-			if ( data.m_to_read_count == 0 )
-			{
-				ResetEvent( h_event );
-			}
-
 			write_shared_memory( data );
 		}
 
 		ReleaseMutex( h_mutex );
+
+		// if there is no process to read - stops message pump
+		if ( data.m_to_read_count == 0 )
+		{
+			ResetEvent( h_event );
+		}
 
 		// waits for little time and lock
 		//std::this_thread::sleep_for( std::chrono::milliseconds( 200 ) );
