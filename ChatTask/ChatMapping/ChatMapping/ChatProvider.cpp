@@ -155,14 +155,16 @@ void update_messages( bool* go_on )
 	while ( *go_on )
 	{
 		// wait for changes
-		DWORD res = WaitForSingleObject( h_message_event, INFINITE );
+		DWORD res = WaitForSingleObject( h_message_event, 2000 /*INFINITE*/ );
+		DWORD err = GetLastError( );
 
 		// handle to mutex
 		res = WaitForSingleObject( h_mutex, INFINITE );
 
 		// read from mapped file
 		Data data;
-		read_shared_memory( data );
+		if( read_shared_memory( data ) != 0 )
+			return;
 
 		if ( strcmp( prev, data.m_last_message ) != 0 )
 		{
@@ -175,7 +177,8 @@ void update_messages( bool* go_on )
 			// decrement processes to 
 			data.m_to_read_count--;
 
-			write_shared_memory( data );
+			if( write_shared_memory( data ) != 0 )
+				return;
 		}
 
 		ReleaseMutex( h_mutex );
