@@ -5,11 +5,11 @@
 
 // mutex for mapped file
 HANDLE h_mutex;
-TCHAR mutex_name[] = TEXT( "Local\\ChatMutex" );
+TCHAR mutex_name[] = TEXT( "ChatMutex" );
 
-// event for other message pumping
-HANDLE h_event;
-TCHAR event_name[] = TEXT( "Local\\FileChangeEvent" );
+// new message event
+HANDLE h_message_event;
+TCHAR message_event_name[] = TEXT( "MessageEvent" );
 
 //const std::string file_name( "C://Users//mrychko//_Work//C++//ChatTask//Chat//chat.dat" );
 const std::string quit( "QUIT" );
@@ -25,8 +25,7 @@ void update_messages( bool* go_on );
 
 
 ChatProvider::ChatProvider( )
-	: m_first( false )
-	, m_continue( true )
+	: m_continue( true )
 {
 
 }
@@ -41,7 +40,12 @@ ChatProvider::~ChatProvider( )
 
 void ChatProvider::start( )
 {
-	create_mutex( );
+	if( !open_sync_objects( ) )
+	{
+		std::cout << "Press any key to exit...\n";
+		_getch( );
+		return;
+	}
 
 	std::cout << "Chat has been begun!\nEnter your name: \n";
 	std::string user_name;
@@ -74,7 +78,7 @@ void ChatProvider::start( )
 		ReleaseMutex( h_mutex );
 
 		// allows other processes to read new message
-		SetEvent( h_event );
+		SetEvent( h_message_event );
 	}
 
 	release_mutex( );
@@ -90,7 +94,7 @@ void ChatProvider::stop( )
 	}
 }
 
-void ChatProvider::create_mutex( )
+bool ChatProvider::open_sync_objects( )
 {
 	// check if this is the first chat client
 	h_mutex = OpenMutex( MUTEX_ALL_ACCESS, 0, mutex_name );
@@ -98,19 +102,20 @@ void ChatProvider::create_mutex( )
 
 	if ( h_mutex == NULL )
 	{
-		// creates mutex to restrict concurent access to the file
-		h_mutex = CreateMutex( NULL, FALSE, ( LPCWSTR ) mutex_name );
-		m_first = true;
+		std::cout << "Server has not run. Run the server first.\n";
+		return false;
 	}
 
 	// EVENT_MODIFY_STATE
-	h_event = OpenEvent( EVENT_MODIFY_STATE, TRUE, event_name );
+	h_message_event = OpenEvent( EVENT_MODIFY_STATE, TRUE, message_event_name );
 
-	if ( h_event == NULL )
+	if ( h_message_event == NULL )
 	{
-		// create event to notify other processes about new message in the file
-		h_event = CreateEvent( NULL, FALSE, FALSE, event_name );
+		std::cout << "There is something wrong with the server. Reset server first.\n";
+		return false;
 	}
+
+	return true;
 }
 
 void ChatProvider::release_mutex( )
@@ -134,16 +139,6 @@ void process_data( bool& init, bool& first, const std::string& name, const std::
 		data.m_process_count++;
 	}
 
-	// if this is the first process 
-	if ( first )
-	{
-		// creates shared memory
-		if( create_shared_memory( ) != 0 )
-			return;
-
-		first = false;
-	}
-
 	// increment to_read count after each new message
 	data.m_to_read_count++;
 
@@ -160,7 +155,7 @@ void update_messages( bool* go_on )
 	while ( *go_on )
 	{
 		// wait for changes
-		DWORD res = WaitForSingleObject( h_event, INFINITE );
+		DWORD res = WaitForSingleObject( h_message_event, INFINITE );
 
 		// handle to mutex
 		res = WaitForSingleObject( h_mutex, INFINITE );
@@ -188,7 +183,7 @@ void update_messages( bool* go_on )
 		// if there is no process to read - stops message pump
 		if ( data.m_to_read_count == 0 )
 		{
-			ResetEvent( h_event );
+			res = ResetEvent( h_message_event );
 		}
 
 		// waits for little time and lock

@@ -4,6 +4,7 @@ class Server
 {
 public:
 	explicit Server( );
+	~Server( );
 
 	void start( );
 	void stop( );

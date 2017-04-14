@@ -14,6 +14,7 @@ int main( )
 {
 	BOOL res = SetConsoleCtrlHandler( ( PHANDLER_ROUTINE ) console_close, TRUE );
 
+	// start chat
 	chat.start( );
 
 	//CloseHandle( h_mutex );
@@ -31,7 +32,7 @@ BOOL console_close( DWORD dwCtrlType )
 
 		CloseHandle( hMapFile );
 		CloseHandle( h_mutex );
-		CloseHandle( h_event );
+		CloseHandle( h_message_event );
 	}
 
 	return TRUE;

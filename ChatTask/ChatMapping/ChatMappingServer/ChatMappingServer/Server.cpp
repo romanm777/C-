@@ -13,22 +13,27 @@ Server::Server( )
 
 }
 
+Server::~Server( )
+{
+	message_checker.join( );
+}
+
 
 void Server::start( )
 {
 	if ( !utils::create_mutex( ) )
 	{
-		std::cout << "Synchronization mutex has not been created. Server can't start.\n";
+		std::cout << "Another chat server has already existed. Server can't start.\n";
 		return;
 	}
 
 	if ( !utils::create_message_event( ) )
 	{
-		std::cout << "Create_message_event has not been created. Server can't start.\n";
+		std::cout << "Another chat server has already existed. Server can't start.\n";
 		return;
 	}
 
-	if ( !utils::create_attach_event( ) )
+	/*if ( !utils::create_attach_event( ) )
 	{
 		std::cout << "Attach_event has not been created. Server can't start.\n";
 		return;
@@ -38,7 +43,7 @@ void Server::start( )
 	{
 		std::cout << "Detach_event has not been created. Server can't start.\n";
 		return;
-	}
+	}*/
 
 	if ( !utils::create_shared_memory( ) )
 	{
@@ -46,18 +51,24 @@ void Server::start( )
 		return;
 	}
 
+	// handle message
 	message_checker = std::thread( utils::handle_message, &m_stop );
-	attached_checker = std::thread( utils::handle_attach, &m_stop );
-	detached_checker = std::thread( utils::handle_detach, &m_stop );
+
+	std::cout << "Server has been started.\n";
+
+	while( true ) {}
+	//attached_checker = std::thread( utils::handle_attach, &m_stop );
+	//detached_checker = std::thread( utils::handle_detach, &m_stop );
 }
 
 void Server::stop( )
 {
 	m_stop = true;
 
-	message_checker.join( );
-	attached_checker.join( );
-	detached_checker.join( );
+	//attached_checker.join( );
+	//detached_checker.join( );
+
+	std::cout << "Server has been stopped.\n"; 
 
 	utils::close_handles( );
 }

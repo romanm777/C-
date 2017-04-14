@@ -5,7 +5,7 @@
 HANDLE hMapFile;	// file mapping handle
 
 #define BUF_SIZE 1024 //256
-TCHAR szName[] = TEXT( "Local\\MyFileMappingObject" );
+TCHAR szName[] = TEXT( "MyFileMappingObject" );
 TCHAR szMsg[] = TEXT( "Message from first process." );
 
 int create_shared_memory( )

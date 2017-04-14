@@ -3,7 +3,7 @@
 
 
 extern HANDLE h_mutex;
-extern HANDLE h_event;
+extern HANDLE h_message_event;
 
 class ChatProvider
 {
@@ -17,7 +17,7 @@ public:
 
 private:
 	//
-	void create_mutex( );
+	bool open_sync_objects( );
 	//
 	void release_mutex( );
 

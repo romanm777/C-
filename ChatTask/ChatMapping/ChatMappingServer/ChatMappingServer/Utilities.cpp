@@ -3,11 +3,11 @@
 
 // mutex for mapped file
 HANDLE h_mutex;
-TCHAR mutex_name[] = TEXT( "Local\\ChatMutex" );
+TCHAR mutex_name[] = TEXT( "ChatMutex" );
 
 // new message event
 HANDLE h_message_event;
-TCHAR message_event_name[] = TEXT( "Local\\MessageEvent" );
+TCHAR message_event_name[] = TEXT( "MessageEvent" );
 
 // new message event
 HANDLE h_attach_event;
@@ -51,7 +51,10 @@ namespace utils
 		if ( h_event == NULL )
 		{
 			// create event to notify other processes about new message in the file
-			h_event = CreateEvent( NULL, FALSE, FALSE, event_name );
+			h_event = CreateEvent( NULL, TRUE, FALSE, event_name );
+			BOOL res = ResetEvent( h_event );
+			DWORD err = GetLastError( );
+
 			return true;
 		}
 		else
@@ -96,11 +99,20 @@ namespace utils
 
 	bool close_handles( )
 	{
-		CloseHandle( h_map_file );
-		CloseHandle( h_mutex );
-		CloseHandle( h_message_event );
-		CloseHandle( h_attach_event );
-		CloseHandle( h_detach_event );
+		BOOL res_mf = CloseHandle( h_map_file );
+		BOOL res_m = CloseHandle( h_mutex );
+		BOOL res_e = CloseHandle( h_message_event );
+		
+		if( !( res_mf && res_m && res_e ) )
+		{
+			std::cout << "Server close handles error.\n";
+			return false;
+		}
+
+		return true;
+
+		//CloseHandle( h_attach_event );
+		//CloseHandle( h_detach_event );
 	}
 
 	///// Event handlers
@@ -109,6 +121,9 @@ namespace utils
 		while ( !( *stop ) )
 		{
 			WaitForSingleObject( h_message_event, INFINITE );
+
+			if( *stop )
+				return;
 
 			std::cout << "Message has been sent\n";
 		}
