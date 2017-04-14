@@ -41,7 +41,7 @@ int main()
 
 		/////////////////// Readin
 		// handle to mutex
-		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
+		res = WaitForSingleObject( h_mutex, INFINITE );
 
 		Data new_data;
 		read_shared_memory( data );

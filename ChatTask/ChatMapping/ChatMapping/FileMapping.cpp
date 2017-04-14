@@ -1,12 +1,9 @@
 #include "stdafx.h"
 #include "FileMapping.h"
+#include "SyncParams.h"
 #pragma comment(lib, "user32.lib")
 
 HANDLE hMapFile;	// file mapping handle
-
-#define BUF_SIZE 1024 //256
-TCHAR szName[] = TEXT( "MyFileMappingObject" );
-TCHAR szMsg[] = TEXT( "Message from first process." );
 
 int create_shared_memory( )
 {
@@ -81,8 +78,8 @@ int read_shared_memory( Data& data )
 
 	if ( h_read_mf == NULL )
 	{
-		_tprintf( TEXT( "Could not open file mapping object (%d).\n" ),
-			GetLastError( ) );
+		//_tprintf( TEXT( "Could not open file mapping object (%d).\n" ),
+		//	GetLastError( ) );
 		return 1;
 	}
 

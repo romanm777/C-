@@ -1,5 +1,6 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Utilities.h"
+#include "windows.h"
 
 // mutex for mapped file
 HANDLE h_mutex;
@@ -7,7 +8,7 @@ TCHAR mutex_name[] = TEXT( "ChatMutex" );
 
 // new message event
 HANDLE h_message_event;
-TCHAR message_event_name[] = TEXT( "MessageEvent" );
+TCHAR message_event_name[] = TEXT( "Local\\MessageEvent" );
 
 // new message event
 HANDLE h_attach_event;
@@ -23,6 +24,8 @@ HANDLE h_map_file;
 #define BUF_SIZE 1024
 TCHAR szName[] = TEXT( "Local\\MyFileMappingObject" );
 TCHAR szMsg[] = TEXT( "Message from first process." );
+
+SECURITY_ATTRIBUTES sa;
 
 namespace utils
 {
@@ -43,6 +46,27 @@ namespace utils
 		}
 	}
 
+	// создание
+	BOOL InitializeSecurityAttributes( LPSECURITY_ATTRIBUTES lpAttributes )
+	{
+		SID_IDENTIFIER_AUTHORITY SIDAuthWorld = SECURITY_WORLD_SID_AUTHORITY;
+		SID_IDENTIFIER_AUTHORITY SIDAuthNT = SECURITY_NT_AUTHORITY;
+
+		// Initialize a security descriptor
+		PSECURITY_DESCRIPTOR pSD = ( PSECURITY_DESCRIPTOR ) LocalAlloc( LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH );
+		if ( NULL == pSD )
+			return FALSE;
+		if ( !InitializeSecurityDescriptor( pSD, SECURITY_DESCRIPTOR_REVISION ) )
+			return FALSE;
+
+		// Initialize a security attributes structure
+		lpAttributes->nLength = sizeof( SECURITY_ATTRIBUTES );
+		lpAttributes->lpSecurityDescriptor = pSD;
+		lpAttributes->bInheritHandle = FALSE;
+
+		return TRUE;
+	}
+
 	bool create_event( TCHAR* event_name, HANDLE& h_event )
 	{
 		// EVENT_MODIFY_STATE
@@ -50,8 +74,15 @@ namespace utils
 
 		if ( h_event == NULL )
 		{
+			//InitializeSecurityAttributes( &sa );
+
+			PSECURITY_DESCRIPTOR psd = ( PSECURITY_DESCRIPTOR ) LocalAlloc( LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH );
+			InitializeSecurityDescriptor( psd, SECURITY_DESCRIPTOR_REVISION );
+			//SetSecurityDescriptorDacl(psd, TRUE, (PACL)NULL, FALSE);
+			sa = { sizeof( sa ), psd, FALSE };
+
 			// create event to notify other processes about new message in the file
-			h_event = CreateEvent( NULL, TRUE, FALSE, event_name );
+			h_event = CreateEvent( &sa, TRUE, FALSE, event_name );
 			BOOL res = ResetEvent( h_event );
 			DWORD err = GetLastError( );
 
@@ -124,6 +155,9 @@ namespace utils
 
 			if( *stop )
 				return;
+
+			WaitForSingleObject( h_mutex, INFINITE );
+			ReleaseMutex( h_mutex );
 
 			std::cout << "Message has been sent\n";
 		}

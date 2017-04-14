@@ -17,7 +17,9 @@ int main( )
 	// start chat
 	chat.start( );
 
-	//CloseHandle( h_mutex );
+	CloseHandle( hMapFile );
+	CloseHandle( h_mutex );
+	CloseHandle( h_message_event );
 
 	return 0;
 }

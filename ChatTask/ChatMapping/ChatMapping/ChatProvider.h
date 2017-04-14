@@ -8,18 +8,18 @@ extern HANDLE h_message_event;
 class ChatProvider
 {
 public:
-	ChatProvider( );
-	~ChatProvider( );
+	explicit ChatProvider( );
+	virtual ~ChatProvider( );
 
 	// start chat
 	void start( );
+
+	// stop chat
 	void stop( );
 
 private:
-	//
+	// opens all nesassary sync objects
 	bool open_sync_objects( );
-	//
-	void release_mutex( );
 
 private:
 	bool			m_first;

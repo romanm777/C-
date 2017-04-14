@@ -1,24 +1,15 @@
 #include "stdafx.h"
 #include "ChatProvider.h"
 #include "FileMapping.h"
+#include "SyncParams.h"
 #include <thread>
 
-// mutex for mapped file
-HANDLE h_mutex;
-TCHAR mutex_name[] = TEXT( "ChatMutex" );
-
-// new message event
-HANDLE h_message_event;
-TCHAR message_event_name[] = TEXT( "MessageEvent" );
-
-//const std::string file_name( "C://Users//mrychko//_Work//C++//ChatTask//Chat//chat.dat" );
-const std::string quit( "QUIT" );
-char prev [1024] = "";
-bool update_msgs = true;
-
+HANDLE h_mutex;			// mutex for mapped file
+HANDLE h_message_event;	// new message event
+char prev [1024] = "";	// previous message buffer
 
 // read/write data to the mapped file
-void process_data( bool& init, bool& first, const std::string& name, const std::string& msg );
+bool process_data( bool& init, const std::string& name, const std::string& msg );
 
 // thread to pump other user's messages  
 void update_messages( bool* go_on );
@@ -32,10 +23,7 @@ ChatProvider::ChatProvider( )
 
 ChatProvider::~ChatProvider( )
 {
-	if ( m_message_pump.joinable( ) )
-	{
-		m_message_pump.join( );
-	}
+	
 }
 
 void ChatProvider::start( )
@@ -72,7 +60,19 @@ void ChatProvider::start( )
 		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
 
 		// process data
-		process_data( init, m_first, user_name, message );
+		if ( !process_data( init, user_name, message ) )
+		{
+			// release mutex and event
+			ReleaseMutex( h_mutex );
+			SetEvent( h_message_event );
+
+			// stop thread
+			stop( );
+
+			std::cout << "Server has probably been stopped.\nPlease close applicatication and run server.\n";
+
+			return;
+		}
 
 		// !!! release mutex
 		ReleaseMutex( h_mutex );
@@ -80,8 +80,6 @@ void ChatProvider::start( )
 		// allows other processes to read new message
 		SetEvent( h_message_event );
 	}
-
-	release_mutex( );
 }
 
 void ChatProvider::stop( )
@@ -107,7 +105,8 @@ bool ChatProvider::open_sync_objects( )
 	}
 
 	// EVENT_MODIFY_STATE
-	h_message_event = OpenEvent( EVENT_MODIFY_STATE, TRUE, message_event_name );
+	h_message_event = OpenEvent( EVENT_ALL_ACCESS, TRUE, message_event_name );
+	DWORD err = GetLastError( );
 
 	if ( h_message_event == NULL )
 	{
@@ -118,17 +117,15 @@ bool ChatProvider::open_sync_objects( )
 	return true;
 }
 
-void ChatProvider::release_mutex( )
-{
-	;
-}
-
-void process_data( bool& init, bool& first, const std::string& name, const std::string& msg )
+bool process_data( bool& init, const std::string& name, const std::string& msg )
 {
 	// read current data
 	Data data;
-	if ( !first && read_shared_memory( data ) != 0 )
-		return;
+	if ( !init )
+	{
+		if ( read_shared_memory( data ) != 0 )
+			return false;
+	}
 
 	// if this is the first iteration
 	if ( init ) 
@@ -147,7 +144,10 @@ void process_data( bool& init, bool& first, const std::string& name, const std::
 	strcpy_s( prev, data.m_last_message );
 
 	// write to mapped file
-	write_shared_memory( data );
+	if( write_shared_memory( data ) != 0 )
+		return false;
+
+	return true;
 }
 
 void update_messages( bool* go_on )
@@ -155,16 +155,28 @@ void update_messages( bool* go_on )
 	while ( *go_on )
 	{
 		// wait for changes
-		DWORD res = WaitForSingleObject( h_message_event, 2000 /*INFINITE*/ );
+		DWORD res = WaitForSingleObject( h_message_event, INFINITE );
 		DWORD err = GetLastError( );
+
+		if ( !( *go_on ) )
+			return;
 
 		// handle to mutex
 		res = WaitForSingleObject( h_mutex, INFINITE );
 
 		// read from mapped file
 		Data data;
-		if( read_shared_memory( data ) != 0 )
+		if ( read_shared_memory( data ) != 0 )
+		{
+			std::cout << "Server has probably been stopped.\nPress any key to close...";
+			_getch( );
+
+			ReleaseMutex( h_mutex );
+
+			ExitProcess( 0 );
+
 			return;
+		}
 
 		if ( strcmp( prev, data.m_last_message ) != 0 )
 		{
