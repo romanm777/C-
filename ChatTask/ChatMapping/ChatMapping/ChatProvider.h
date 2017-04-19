@@ -1,35 +1,42 @@
 #pragma once
 #include <thread>
-
+#include "FileMapping.h"
 
 class ChatProvider
 {
 public:
-	explicit ChatProvider( );
+	explicit ChatProvider( sync::SyncProvider& sync );
 	virtual ~ChatProvider( );
 
 	// start chat
-	void start( );
+	virtual void start( );
 
 	// stop chat
-	void stop( );
+	virtual void stop( );
 
-	static HANDLE get_mutex( );
-	static HANDLE get_event( );
+	virtual void set_message_pump_callback( void( *message_pump )( bool* go_on, sync::SyncProvider* sync ) );
 
-private:
+protected:
+	virtual void create_message_pump( );
+	virtual std::thread& get_message_pump( );
+	virtual std::string input_user_name( ) const;
+	virtual std::string input_user_message( ) const;
 
-#if defined( _CM_GTEST )
-	FRIEND_TEST( ChatProviderTest, TestSyncObjects );
-#endif
+	virtual bool stop_condition( ) const;
 
-	// opens all nesassary sync objects
-	bool open_sync_objects( );
+	// chat body handler ( it's invoked in loop )
+	virtual bool chat_body( bool init, const std::string& message, const std::string& user_name );
+
+	// read/write data to the mapped file
+	virtual bool process_data( bool& init, const std::string& name, const std::string& msg );
 
 private:
 	bool			m_first;
 	bool			m_continue;
 	std::thread		m_message_pump;
+
+	sync::SyncProvider& m_sync;
+	void( *m_message_pump_callback )( bool* go_on, sync::SyncProvider* sync );
 };
 
 extern HANDLE h_mutex;

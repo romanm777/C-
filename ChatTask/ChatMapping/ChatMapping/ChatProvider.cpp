@@ -1,24 +1,22 @@
 #include "stdafx.h"
 #include "ChatProvider.h"
-#include "FileMapping.h"
 #include "SyncParams.h"
 #include <thread>
 
-HANDLE h_mutex;			// mutex for mapped file
-HANDLE h_message_event;	// new message event
-char prev [1024] = "";	// previous message buffer
+char prev[1024] = "";	// previous message buffer
 
-// read/write data to the mapped file
-bool process_data( bool& init, const std::string& name, const std::string& msg );
-
-// thread to pump other user's messages  
-void update_messages( bool* go_on );
+// thread to pump other user's messages.
+// go_on - flag to continue or not
+// read - callback to read data from the shared memory
+// write - callback to write data to the shared memory
+void update_messages( bool* go_on, sync::SyncProvider* sync );
 
 
-ChatProvider::ChatProvider( )
+ChatProvider::ChatProvider( sync::SyncProvider& sync )
 	: m_continue( true )
+	, m_sync( sync )
 {
-
+	set_message_pump_callback( update_messages );
 }
 
 ChatProvider::~ChatProvider( )
@@ -28,57 +26,35 @@ ChatProvider::~ChatProvider( )
 
 void ChatProvider::start( )
 {
-	if( !open_sync_objects( ) )
+	if( !m_sync.open_sync_objects( ) )
 	{
 		std::cout << "Press any key to exit...\n";
 		_getch( );
 		return;
 	}
 
-	std::cout << "Chat has been begun!\nEnter your name: \n";
-	std::string user_name;
-	std::cin >> user_name;
+	std::string user_name = input_user_name( );
 
-	std::cout << "Messages:\n";
-
-	m_message_pump = std::thread ( update_messages, &m_continue );
+	// creates a message pump thread
+	create_message_pump( );
 
 	// allows to read last message
 	//SetEvent( m_hevent );
 
+	// first iteration
 	bool init = true;
 
 	std::string message;
-	while ( true )
+	while ( !stop_condition( ) )
 	{
-		std::cin >> message;
+		// gets user message
+		message = input_user_message( );
 
 		if ( message == quit )
 			break;
 
-		// handle to mutex
-		DWORD res = WaitForSingleObject( h_mutex, INFINITE );
-
-		// process data
-		if ( !process_data( init, user_name, message ) )
-		{
-			// release mutex and event
-			ReleaseMutex( h_mutex );
-			SetEvent( h_message_event );
-
-			// stop thread
-			stop( );
-
-			std::cout << "Server has probably been stopped.\nPlease close applicatication and run server.\n";
-
+		if ( !chat_body( init, message, user_name ) )
 			return;
-		}
-
-		// !!! release mutex
-		ReleaseMutex( h_mutex );
-
-		// allows other processes to read new message
-		SetEvent( h_message_event );
 	}
 }
 
@@ -92,48 +68,82 @@ void ChatProvider::stop( )
 	}
 }
 
-HANDLE ChatProvider::get_mutex( )
+
+void ChatProvider::set_message_pump_callback( void( *callback )( bool* go_on, sync::SyncProvider* sync ) )
 {
-	return h_mutex;
+	m_message_pump_callback = callback;
 }
 
-HANDLE ChatProvider::get_event( )
+void ChatProvider::create_message_pump( )
 {
-	return h_message_event;
+	m_message_pump = std::thread( m_message_pump_callback, &m_continue, &m_sync );
 }
 
-bool ChatProvider::open_sync_objects( )
+std::thread& ChatProvider::get_message_pump( )
 {
-	// check if this is the first chat client
-	h_mutex = OpenMutex( MUTEX_ALL_ACCESS, 0, mutex_name );
-	DWORD res = GetLastError( );
+	return m_message_pump;
+}
 
-	if ( h_mutex == NULL )
+std::string ChatProvider::input_user_name( ) const
+{
+	std::cout << "Chat has been begun!\nEnter your name: \n";
+	std::string name;
+	std::cin >> name;
+
+	std::cout << "Messages:\n";
+
+	return name;
+}
+
+std::string ChatProvider::input_user_message( ) const
+{
+	std::string message;
+	std::cin >> message;
+
+	return message;
+}
+
+bool ChatProvider::stop_condition( ) const
+{
+	return false;
+}
+
+bool ChatProvider::chat_body( bool init, const std::string& message, const std::string& user_name )
+{
+	// handle to mutex
+	DWORD res = m_sync.wait_for_mutex( );
+
+	// process data
+	if ( !process_data( init, user_name, message ) )
 	{
-		std::cout << "Server has not run. Run the server first.\n";
+		// release mutex and event
+		m_sync.release_mutex( );
+		m_sync.set_event( );
+
+		// stop thread
+		stop( );
+
+		std::cout << "Server has probably been stopped.\nPlease close applicatication and run server.\n";
+
 		return false;
 	}
 
-	// EVENT_MODIFY_STATE
-	h_message_event = OpenEvent( EVENT_ALL_ACCESS, TRUE, message_event_name );
-	DWORD err = GetLastError( );
+	// !!! release mutex
+	m_sync.release_mutex( );
 
-	if ( h_message_event == NULL )
-	{
-		std::cout << "There is something wrong with the server. Reset server first.\n";
-		return false;
-	}
+	// allows other processes to read new message
+	m_sync.set_event( );
 
 	return true;
 }
 
-bool process_data( bool& init, const std::string& name, const std::string& msg )
+bool ChatProvider::process_data( bool& init, const std::string& name, const std::string& msg )
 {
 	// read current data
-	Data data;
+	sync::Data data;
 	if ( !init )
 	{
-		if ( read_shared_memory( data ) != 0 )
+		if ( m_sync.read_shared_memory( data ) != 0 )
 			return false;
 	}
 
@@ -154,36 +164,34 @@ bool process_data( bool& init, const std::string& name, const std::string& msg )
 	strcpy_s( prev, data.m_last_message );
 
 	// write to mapped file
-	if( write_shared_memory( data ) != 0 )
+	if( m_sync.write_shared_memory( data ) != 0 )
 		return false;
 
 	return true;
 }
 
-void update_messages( bool* go_on )
+void update_messages( bool* go_on, sync::SyncProvider* sync )
 {
 	while ( *go_on )
 	{
 		// wait for changes
-		DWORD res = WaitForSingleObject( h_message_event, INFINITE );
+		DWORD res = sync->wait_for_event( );
 		DWORD err = GetLastError( );
 
 		if ( !( *go_on ) )
 			return;
 
 		// handle to mutex
-		res = WaitForSingleObject( h_mutex, INFINITE );
+		res = sync->wait_for_mutex( );
 
 		// read from mapped file
-		Data data;
-		if ( read_shared_memory( data ) != 0 )
+		sync::Data data;
+		if ( sync->read_shared_memory( data ) != 0 )
 		{
 			std::cout << "Server has probably been stopped.\nPress any key to close...";
 			_getch( );
 
-			ReleaseMutex( h_mutex );
-
-			ExitProcess( 0 );
+			sync->release_mutex( );
 
 			return;
 		}
@@ -199,16 +207,16 @@ void update_messages( bool* go_on )
 			// decrement processes to 
 			data.m_to_read_count--;
 
-			if( write_shared_memory( data ) != 0 )
+			if( sync->write_shared_memory( data ) != 0 )
 				return;
 		}
 
-		ReleaseMutex( h_mutex );
+		sync->release_mutex( );
 
 		// if there is no process to read - stops message pump
 		if ( data.m_to_read_count == 0 )
 		{
-			res = ResetEvent( h_message_event );
+			res = sync->reset_event( );
 		}
 
 		// waits for little time and lock

@@ -5,7 +5,8 @@
 #include "ChatProvider.h"
 #include "FileMapping.h"
 
-ChatProvider chat;
+sync::SyncProvider synchro;
+ChatProvider chat( synchro );
 
 BOOL console_close( DWORD dwCtrlType );
 void clean_up( );
@@ -17,9 +18,9 @@ int main( )
 	// start chat
 	chat.start( );
 
-	CloseHandle( get_shared_memory( ) );
-	CloseHandle( ChatProvider::get_mutex( ) );
-	CloseHandle( ChatProvider::get_event( ) );
+	CloseHandle( synchro.get_shared_memory( ) );
+	CloseHandle( sync::SyncProvider::get_mutex( ) );
+	CloseHandle( sync::SyncProvider::get_event( ) );
 
 	return 0;
 }
@@ -32,9 +33,9 @@ BOOL console_close( DWORD dwCtrlType )
 		// clean up before close
 		clean_up( );
 
-		CloseHandle( get_shared_memory( ) );
-		CloseHandle( ChatProvider::get_mutex( ) );
-		CloseHandle( ChatProvider::get_event( ) );
+		CloseHandle( synchro.get_shared_memory( ) );
+		CloseHandle( sync::SyncProvider::get_mutex( ) );
+		CloseHandle( sync::SyncProvider::get_event( ) );
 	}
 
 	return TRUE;
@@ -48,8 +49,8 @@ void clean_up( )
 	DWORD res = WaitForSingleObject( h_mutex, INFINITE );
 
 	// read current data
-	Data data;
-	if ( read_shared_memory( data ) != 0 )
+	sync::Data data;
+	if ( synchro.read_shared_memory( data ) != 0 )
 		return;
 
 	// decrement process count
@@ -57,7 +58,7 @@ void clean_up( )
 	data.m_to_read_count--;
 
 	// write to mapped file
-	write_shared_memory( data );
+	synchro.write_shared_memory( data );
 
 	ReleaseMutex( h_mutex );
 
