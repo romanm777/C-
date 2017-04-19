@@ -17,9 +17,9 @@ int main( )
 	// start chat
 	chat.start( );
 
-	CloseHandle( hMapFile );
-	CloseHandle( h_mutex );
-	CloseHandle( h_message_event );
+	CloseHandle( get_shared_memory( ) );
+	CloseHandle( ChatProvider::get_mutex( ) );
+	CloseHandle( ChatProvider::get_event( ) );
 
 	return 0;
 }
@@ -32,9 +32,9 @@ BOOL console_close( DWORD dwCtrlType )
 		// clean up before close
 		clean_up( );
 
-		CloseHandle( hMapFile );
-		CloseHandle( h_mutex );
-		CloseHandle( h_message_event );
+		CloseHandle( get_shared_memory( ) );
+		CloseHandle( ChatProvider::get_mutex( ) );
+		CloseHandle( ChatProvider::get_event( ) );
 	}
 
 	return TRUE;

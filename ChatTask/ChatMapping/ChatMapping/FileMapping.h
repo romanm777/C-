@@ -1,6 +1,5 @@
 #pragma once
 
-extern HANDLE hMapFile;	// file mapping handle
 
 struct Data
 {
@@ -14,6 +13,8 @@ struct Data
 	int				m_to_read_count;
 	char			m_last_message[1024];
 };
+
+HANDLE get_shared_memory( );
 
 int create_shared_memory( );
 

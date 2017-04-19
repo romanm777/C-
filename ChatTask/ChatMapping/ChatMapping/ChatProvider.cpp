@@ -92,6 +92,16 @@ void ChatProvider::stop( )
 	}
 }
 
+HANDLE ChatProvider::get_mutex( )
+{
+	return h_mutex;
+}
+
+HANDLE ChatProvider::get_event( )
+{
+	return h_message_event;
+}
+
 bool ChatProvider::open_sync_objects( )
 {
 	// check if this is the first chat client

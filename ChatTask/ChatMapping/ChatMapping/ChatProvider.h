@@ -2,9 +2,6 @@
 #include <thread>
 
 
-extern HANDLE h_mutex;
-extern HANDLE h_message_event;
-
 class ChatProvider
 {
 public:
@@ -17,7 +14,15 @@ public:
 	// stop chat
 	void stop( );
 
+	static HANDLE get_mutex( );
+	static HANDLE get_event( );
+
 private:
+
+#if defined( _CM_GTEST )
+	FRIEND_TEST( ChatProviderTest, TestSyncObjects );
+#endif
+
 	// opens all nesassary sync objects
 	bool open_sync_objects( );
 

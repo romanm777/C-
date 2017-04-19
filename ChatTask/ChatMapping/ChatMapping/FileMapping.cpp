@@ -3,7 +3,12 @@
 #include "SyncParams.h"
 #pragma comment(lib, "user32.lib")
 
-HANDLE hMapFile;	// file mapping handle
+HANDLE hMapFile = NULL;	// file mapping handle
+
+HANDLE get_shared_memory( )
+{
+	return hMapFile;
+}
 
 int create_shared_memory( )
 {
