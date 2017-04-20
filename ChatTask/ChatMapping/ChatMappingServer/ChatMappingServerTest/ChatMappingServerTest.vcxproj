@@ -153,11 +153,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ChatMappingServer\Server.h" />
+    <ClInclude Include="..\ChatMappingServer\Utilities.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestServer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ChatMappingServer\Server.cpp" />
+    <ClCompile Include="..\ChatMappingServer\Utilities.cpp" />
     <ClCompile Include="ChatMappingServerTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
