@@ -15,7 +15,10 @@ Server::Server( utils::ServerSyncProvider& sync )
 
 Server::~Server( )
 {
-	message_checker.join( );
+	if ( message_checker.joinable( ) )
+	{
+		message_checker.join( );
+	}
 }
 
 
@@ -43,7 +46,7 @@ void Server::start( )
 
 	m_server_sync.run_message_checker( message_checker, &m_stop );
 
-	std::cout << "Server has been started.\n";
+	show_start_message( );
 
 	if ( message_checker.joinable( ) )
 	{
@@ -55,7 +58,17 @@ void Server::stop( )
 {
 	m_stop = true;
 
-	std::cout << "Server has been stopped.\n"; 
+	show_end_message( );
 
 	m_server_sync.close_handles( );
+}
+
+void Server::show_start_message( ) const
+{
+	std::cout << "Server has been started.\n";
+}
+
+void Server::show_end_message( ) const
+{
+	std::cout << "Server has been stopped.\n";
 }

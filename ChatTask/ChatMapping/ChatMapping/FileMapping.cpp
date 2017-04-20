@@ -64,8 +64,6 @@ namespace sync
 
 		if ( h_write_mf == NULL )
 		{
-			_tprintf( TEXT( "Could not create file mapping object (%d).\n" ),
-				GetLastError( ) );
 			return 1;
 		}
 		pBuf = ( LPTSTR ) MapViewOfFile( h_write_mf,   // handle to map object
