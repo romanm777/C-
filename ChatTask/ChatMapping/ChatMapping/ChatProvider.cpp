@@ -21,7 +21,7 @@ ChatProvider::ChatProvider( sync::SyncProvider& sync )
 
 ChatProvider::~ChatProvider( )
 {
-	
+	stop( );
 }
 
 void ChatProvider::start( )

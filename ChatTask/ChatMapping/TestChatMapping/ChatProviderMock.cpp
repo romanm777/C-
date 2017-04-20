@@ -11,7 +11,7 @@ ChatProviderMock::ChatProviderMock( sync::SyncProvider& sync, ChatProviderSpy& s
 
 ChatProviderMock::~ChatProviderMock( )
 {
-	;
+	stop( );
 }
 
 void ChatProviderMock::stop( )
@@ -37,7 +37,7 @@ void ChatProviderMock::set_mock_message_count( int count )
 void ChatProviderMock::create_message_pump( )
 {
 	m_spy.m_create_message_pump++;
-	ChatProvider::create_message_pump( );
+	m_spy.callback++;
 }
 
 std::string ChatProviderMock::input_user_name( ) const
@@ -54,7 +54,7 @@ std::string ChatProviderMock::input_user_message( ) const
 
 bool ChatProviderMock::stop_condition( ) const
 {
-	return m_spy.m_input_user_message > m_mock_message_count ? true : false;
+	return m_spy.m_input_user_message == m_mock_message_count ? true : false;
 }
 
 bool ChatProviderMock::chat_body( bool init, const std::string& message, const std::string& user_name )

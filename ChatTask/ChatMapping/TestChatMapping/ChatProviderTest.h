@@ -54,7 +54,7 @@ TEST_F( ChatProviderTest, TestCallback )
 
 	mock_chat->start( );
 
-	EXPECT_GT( 0, chat_spy.callback ) << "message pump callback has never been called.";
+	EXPECT_LT( 0, chat_spy.callback ) << "message pump callback has never been called.";
 }
 
 TEST_F( ChatProviderTest, TestInputUserName )
@@ -63,7 +63,7 @@ TEST_F( ChatProviderTest, TestInputUserName )
 
 	mock_chat->start( );
 
-	EXPECT_GT( 0, chat_spy.m_input_user_name ) << "input_user_name( ) has never been called.";
+	EXPECT_LT( 0, chat_spy.m_input_user_name ) << "input_user_name( ) has never been called.";
 }
 
 TEST_F( ChatProviderTest, TestInputUserMessage )
@@ -72,7 +72,7 @@ TEST_F( ChatProviderTest, TestInputUserMessage )
 
 	mock_chat->start( );
 
-	EXPECT_LE( message_input_count, chat_spy.m_input_user_message ) << "input_user_message( ) has never been called.";
+	EXPECT_LE( chat_spy.m_input_user_message, message_input_count ) << "input_user_message( ) has never been called.";
 }
 
 TEST_F( ChatProviderTest, TestChatBody )
@@ -81,7 +81,7 @@ TEST_F( ChatProviderTest, TestChatBody )
 
 	mock_chat->start( );
 
-	EXPECT_LE( message_input_count, chat_spy.m_chat_body ) << "chat_body( ) has never been called.";
+	EXPECT_LE( chat_spy.m_chat_body, message_input_count ) << "chat_body( ) has never been called.";
 }
 
 TEST_F( ChatProviderTest, TestProcessData )
@@ -90,5 +90,17 @@ TEST_F( ChatProviderTest, TestProcessData )
 
 	mock_chat->start( );
 
-	EXPECT_LE( message_input_count, chat_spy.m_process_data ) << "process_data( ) has never been called.";
+	EXPECT_LE( chat_spy.m_process_data, message_input_count ) << "process_data( ) has never been called.";
+}
+
+TEST_F( ChatProviderTest, TestStop )
+{
+	EXPECT_CALL( mock_sync, open_sync_objects( ) ).WillRepeatedly( Return( true ) );
+
+	mock_chat->start( );
+	
+	delete mock_chat;
+	mock_chat = NULL;
+
+	EXPECT_LT( 0, chat_spy.m_stop_count ) << "stop( ) has never been called.";
 }
