@@ -44,12 +44,6 @@ public:
 	virtual void SetUp( )
 	{
 		server = std::shared_ptr<Server>( new Server( mock_sync ) );
-
-		EXPECT_CALL( mock_sync, create_mutex( ) ).WillRepeatedly( Return( true ) );
-		EXPECT_CALL( mock_sync, create_message_event( ) ).WillRepeatedly( Return( true ) );
-		EXPECT_CALL( mock_sync, create_shared_memory( ) ).WillRepeatedly( Return( true ) );
-		EXPECT_CALL( mock_sync, close_handles( ) ).WillRepeatedly( Return( true ) );
-		//EXPECT_CALL( mock_sync, run_message_checker( _, _ ) ).Times( 1 );
 	}
 
 	virtual void TearDown( )
@@ -62,17 +56,19 @@ TEST_F( SeverSyncProviderTest, CreateMutexTest )
 {
 	EXPECT_CALL( mock_sync, create_mutex( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
 	EXPECT_CALL( mock_sync, create_message_event( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
+	EXPECT_CALL( mock_sync, close_handles( ) ).WillRepeatedly( Return( false ) );
 
 	server->start( );
 	server->stop( );
-
-	EXPECT_TRUE( true );
 }
 
 TEST_F( SeverSyncProviderTest, CreateMessageEventTest )
 {
+	EXPECT_CALL( mock_sync, create_mutex( ) ).WillRepeatedly( Return( true ) );
 	EXPECT_CALL( mock_sync, create_message_event( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
 	EXPECT_CALL( mock_sync, create_shared_memory( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
+
+	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
 
 	server->start( );
 	server->stop( );
@@ -80,7 +76,11 @@ TEST_F( SeverSyncProviderTest, CreateMessageEventTest )
 
 TEST_F( SeverSyncProviderTest, CreateSharedMemoryTest )
 {
+	EXPECT_CALL( mock_sync, create_mutex( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_message_event( ) ).WillRepeatedly( Return( true ) );
 	EXPECT_CALL( mock_sync, create_shared_memory( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, run_message_checker( _, _ ) ).Times( 1 );
+
 	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
 
 	server->start( );
@@ -89,6 +89,10 @@ TEST_F( SeverSyncProviderTest, CreateSharedMemoryTest )
 
 TEST_F( SeverSyncProviderTest, CloseHandlesTest )
 {
+	EXPECT_CALL( mock_sync, create_mutex( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_message_event( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_shared_memory( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, run_message_checker( _, _ ) ).Times( 1 );
 	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
 
 	server->start( );
@@ -98,12 +102,20 @@ TEST_F( SeverSyncProviderTest, CloseHandlesTest )
 /////////////////////////////	False has been returned by some methods		///////////////////////
 TEST_F( SeverSyncProviderTest, CreateMutexFalseTest )
 {
+	EXPECT_CALL( mock_sync, create_mutex( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
+	EXPECT_CALL( mock_sync, create_message_event( ) ).Times( 0 );
+	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
 
+	server->start( );
+	server->stop( );
 }
 
 TEST_F( SeverSyncProviderTest, CreateMessageEventFalseTest )
 {
-	EXPECT_CALL( mock_sync, create_message_event( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_mutex( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_message_event( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
+	EXPECT_CALL( mock_sync, create_shared_memory( ) ).Times( 0 );
+	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
 
 	server->start( );
 	server->stop( );
@@ -111,15 +123,11 @@ TEST_F( SeverSyncProviderTest, CreateMessageEventFalseTest )
 
 TEST_F( SeverSyncProviderTest, CreateSharedMemoryFalseTest )
 {
-	EXPECT_CALL( mock_sync, create_shared_memory( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
-
-	server->start( );
-	server->stop( );
-}
-
-TEST_F( SeverSyncProviderTest, CloseHandlesFalseTest )
-{
-	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_mutex( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_message_event( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( mock_sync, create_shared_memory( ) ).WillRepeatedly( Return( false ) );
+	EXPECT_CALL( mock_sync, run_message_checker( _, _ ) ).Times( 0 );
+	EXPECT_CALL( mock_sync, close_handles( ) ).Times( 1 ).WillRepeatedly( Return( false ) );
 
 	server->start( );
 	server->stop( );
