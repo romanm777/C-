@@ -170,7 +170,6 @@ namespace sync
 		hEvents[0] = h_message_event;
 		hEvents[1] = h_stop_event;
 
-		//return WaitForSingleObject( h_message_event, INFINITE );
 		return WaitForMultipleObjects( 2, hEvents, FALSE, INFINITE );
 	}
 

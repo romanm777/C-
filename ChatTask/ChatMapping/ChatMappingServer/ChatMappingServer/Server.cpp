@@ -45,15 +45,15 @@ void Server::start( )
 
 	std::cout << "Server has been started.\n";
 
-	while( true ) {}
+	if ( message_checker.joinable( ) )
+	{
+		message_checker.join( );
+	}
 }
 
 void Server::stop( )
 {
 	m_stop = true;
-
-	//attached_checker.join( );
-	//detached_checker.join( );
 
 	std::cout << "Server has been stopped.\n"; 
 
