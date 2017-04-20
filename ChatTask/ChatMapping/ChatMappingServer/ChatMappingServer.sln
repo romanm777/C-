@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatMappingServer", "ChatMappingServer\ChatMappingServer.vcxproj", "{E1AA1E60-8695-45B2-9E3F-40FE6F5CE0DB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatMappingServerTest", "ChatMappingServerTest\ChatMappingServerTest.vcxproj", "{9805D03B-69DB-4F94-B296-80A1B4EB45FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{E1AA1E60-8695-45B2-9E3F-40FE6F5CE0DB}.Release|x64.Build.0 = Release|x64
 		{E1AA1E60-8695-45B2-9E3F-40FE6F5CE0DB}.Release|x86.ActiveCfg = Release|Win32
 		{E1AA1E60-8695-45B2-9E3F-40FE6F5CE0DB}.Release|x86.Build.0 = Release|Win32
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Debug|x64.ActiveCfg = Debug|x64
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Debug|x64.Build.0 = Debug|x64
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Debug|x86.ActiveCfg = Debug|Win32
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Debug|x86.Build.0 = Debug|Win32
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Release|x64.ActiveCfg = Release|x64
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Release|x64.Build.0 = Release|x64
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Release|x86.ActiveCfg = Release|Win32
+		{9805D03B-69DB-4F94-B296-80A1B4EB45FD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

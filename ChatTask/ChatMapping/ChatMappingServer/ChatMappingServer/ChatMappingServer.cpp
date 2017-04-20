@@ -5,7 +5,8 @@
 #include "Server.h"
 
 // server to provide chat
-Server server;
+utils::ServerSyncProvider sync;
+Server server( sync );
 
 BOOL console_close( DWORD dwCtrlType );
 

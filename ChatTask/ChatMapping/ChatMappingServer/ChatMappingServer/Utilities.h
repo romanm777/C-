@@ -2,22 +2,20 @@
 
 namespace utils
 {
-	bool create_mutex( );
+	class ServerSyncProvider
+	{
+	public:
+		explicit ServerSyncProvider( );
+		virtual ~ServerSyncProvider( );
 
-	bool create_message_event( );
+		virtual bool create_mutex( );
 
-	bool create_attach_event( );
+		virtual bool create_message_event( );
 
-	bool create_detach_event( );
+		virtual bool create_shared_memory( );
 
-	bool create_shared_memory( );
+		virtual bool close_handles( );
+	};
 
-	bool close_handles( );
-
-	///////////////////////////
 	void handle_message( bool* stop );
-
-	void handle_attach( bool* stop );
-	
-	void handle_detach( bool* stop );
 }

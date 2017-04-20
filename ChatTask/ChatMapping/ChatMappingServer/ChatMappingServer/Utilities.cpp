@@ -29,7 +29,17 @@ SECURITY_ATTRIBUTES sa;
 
 namespace utils
 {
-	bool create_mutex( )
+	ServerSyncProvider::ServerSyncProvider( )
+	{
+
+	}
+
+	ServerSyncProvider::~ServerSyncProvider( )
+	{
+		;
+	}
+
+	bool ServerSyncProvider::create_mutex( )
 	{
 		// check if this is the first chat client
 		h_mutex = OpenMutex( MUTEX_ALL_ACCESS, 0, mutex_name );
@@ -46,7 +56,7 @@ namespace utils
 		}
 	}
 
-	// создание
+	
 	BOOL InitializeSecurityAttributes( LPSECURITY_ATTRIBUTES lpAttributes )
 	{
 		SID_IDENTIFIER_AUTHORITY SIDAuthWorld = SECURITY_WORLD_SID_AUTHORITY;
@@ -94,22 +104,12 @@ namespace utils
 		}
 	}
 
-	bool create_message_event( )
+	bool ServerSyncProvider::create_message_event( )
 	{
 		return create_event( message_event_name, h_message_event );
 	}
 
-	bool create_attach_event( )
-	{
-		return create_event( attach_event_name, h_attach_event );
-	}
-
-	bool create_detach_event( )
-	{
-		return create_event( detach_event_name, h_detach_event );
-	}
-
-	bool create_shared_memory( )
+	bool ServerSyncProvider::create_shared_memory( )
 	{
 		h_map_file = CreateFileMapping(
 			INVALID_HANDLE_VALUE,    // use paging file
@@ -128,7 +128,7 @@ namespace utils
 		return true;
 	}
 
-	bool close_handles( )
+	bool ServerSyncProvider::close_handles( )
 	{
 		BOOL res_mf = CloseHandle( h_map_file );
 		BOOL res_m = CloseHandle( h_mutex );
@@ -160,30 +160,6 @@ namespace utils
 			ReleaseMutex( h_mutex );
 
 			std::cout << "Message has been sent\n";
-		}
-	}
-
-	void handle_attach( bool* stop )
-	{
-		while ( !( *stop ) )
-		{
-			WaitForSingleObject( h_attach_event, INFINITE );
-
-			std::cout << "New messanger has attached.\n";
-
-			ResetEvent( h_attach_event );
-		}
-	}
-
-	void handle_detach( bool* stop )
-	{
-		while ( !( *stop ) )
-		{
-			WaitForSingleObject( h_message_event, INFINITE );
-
-			std::cout << "New messanger has detached.\n";
-
-			ResetEvent( h_detach_event );
 		}
 	}
 }
