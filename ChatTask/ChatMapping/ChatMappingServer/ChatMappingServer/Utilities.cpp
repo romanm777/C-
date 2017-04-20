@@ -146,6 +146,11 @@ namespace utils
 		//CloseHandle( h_detach_event );
 	}
 
+	void ServerSyncProvider::run_message_checker( std::thread& checker, bool* stop )
+	{
+		checker = std::thread( utils::handle_message, stop );
+	}
+
 	///// Event handlers
 	void handle_message( bool* stop )
 	{

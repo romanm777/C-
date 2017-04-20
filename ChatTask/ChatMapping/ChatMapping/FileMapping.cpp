@@ -7,12 +7,15 @@ HANDLE hMapFile = NULL;	// file mapping handle
 
 HANDLE h_mutex;			// mutex for mapped file
 HANDLE h_message_event;	// new message event
+HANDLE h_stop_event;
+
+HANDLE hEvents[2];
 
 namespace sync
 {
 	SyncProvider::SyncProvider( )
 	{
-
+		h_stop_event = CreateEvent( NULL, TRUE, FALSE, NULL );
 	}
 
 	SyncProvider::~SyncProvider( )
@@ -164,7 +167,11 @@ namespace sync
 
 	DWORD SyncProvider::wait_for_event( )
 	{
-		return WaitForSingleObject( h_message_event, INFINITE );
+		hEvents[0] = h_message_event;
+		hEvents[1] = h_stop_event;
+
+		//return WaitForSingleObject( h_message_event, INFINITE );
+		return WaitForMultipleObjects( 2, hEvents, FALSE, INFINITE );
 	}
 
 	BOOL SyncProvider::release_mutex( )
@@ -190,6 +197,11 @@ namespace sync
 	BOOL SyncProvider::reset_event( )
 	{
 		return ResetEvent( h_message_event );
+	}
+
+	BOOL SyncProvider::set_stop_event( )
+	{
+		return SetEvent( h_stop_event );
 	}
 
 	HANDLE SyncProvider::open_mutex( TCHAR name[] )

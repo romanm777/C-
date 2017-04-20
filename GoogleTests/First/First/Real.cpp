@@ -52,9 +52,10 @@ namespace real
 
 	void User::repeat_name( const int times ) const
 	{
+		std::string temp;
 		for ( int i = 0; i < times; ++i )
 		{
-			m_real.get_name( );
+			temp = m_real.get_name( );
 		}
 	}
 }

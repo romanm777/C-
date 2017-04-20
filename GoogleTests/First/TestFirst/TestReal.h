@@ -11,6 +11,7 @@ public:
 // tests
 
 using ::testing::AtLeast;
+using ::testing::Return;
 
 TEST( RealClassTest, GetNameCallNumber )
 {
@@ -18,6 +19,7 @@ TEST( RealClassTest, GetNameCallNumber )
 	real::User user( mock_real );
 
 	const int times = 10;
+	EXPECT_CALL( mock_real, get_name( ) ).WillRepeatedly( Return( "Test" ) );
 	EXPECT_CALL( mock_real, get_name( ) ).Times( AtLeast( times ) );// .WillOnce( Invoke( user, repeat_name( times ) ) );
 	user.repeat_name( times );
 }

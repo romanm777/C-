@@ -17,5 +17,7 @@ ipch
 *.psess
 .vs
 
+.db
+
 x64
 Debug

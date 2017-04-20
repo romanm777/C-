@@ -1,4 +1,5 @@
 #pragma once
+#include <thread>
 
 namespace utils
 {
@@ -15,6 +16,8 @@ namespace utils
 		virtual bool create_shared_memory( );
 
 		virtual bool close_handles( );
+
+		virtual void run_message_checker( std::thread& checker, bool* stop );
 	};
 
 	void handle_message( bool* stop );

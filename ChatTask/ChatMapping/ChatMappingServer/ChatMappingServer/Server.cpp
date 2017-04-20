@@ -40,7 +40,8 @@ void Server::start( )
 	}
 
 	// handle message
-	message_checker = std::thread( utils::handle_message, &m_stop );
+
+	m_server_sync.run_message_checker( message_checker, &m_stop );
 
 	std::cout << "Server has been started.\n";
 

@@ -1,0 +1,10 @@
+﻿  stdafx.cpp
+  ChatMapping.cpp
+  ChatProvider.cpp
+  FileMapping.cpp
+  SyncParams.cpp
+  Generating code
+  All 279 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ChatMapping.vcxproj -> C:\Users\mrychko\_Work\C++\ChatTask\ChatMapping\Release\ChatMapping.exe
+  ChatMapping.vcxproj -> C:\Users\mrychko\_Work\C++\ChatTask\ChatMapping\Release\ChatMapping.pdb (Full PDB)

@@ -45,6 +45,7 @@ namespace sync
 
 		virtual BOOL set_event( );
 		virtual BOOL reset_event( );
+		virtual BOOL set_stop_event( );
 
 	protected:
 		virtual HANDLE open_mutex( TCHAR name[] );

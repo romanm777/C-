@@ -64,6 +64,7 @@ void ChatProvider::stop( )
 
 	if ( m_message_pump.joinable( ) )
 	{
+		m_sync.set_stop_event( );
 		m_message_pump.join( );
 	}
 }
