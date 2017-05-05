@@ -12,11 +12,11 @@ char prev[1024] = "";	// previous message buffer
 void update_messages( bool* go_on, sync::SyncProvider* sync );
 
 
-ChatProvider::ChatProvider( sync::SyncProvider& sync )
+ChatProvider::ChatProvider( sync::SyncProvider& sync, void ( *message_pump )( bool* go_on, sync::SyncProvider* sync ) )
 	: m_continue( true )
 	, m_sync( sync )
 {
-	set_message_pump_callback( update_messages );
+	set_message_pump_callback( message_pump != nullptr ? message_pump : update_messages );
 }
 
 ChatProvider::~ChatProvider( )

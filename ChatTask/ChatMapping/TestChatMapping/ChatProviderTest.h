@@ -104,3 +104,62 @@ TEST_F( ChatProviderTest, TestStop )
 
 	EXPECT_LT( 0, chat_spy.m_stop_count ) << "stop( ) has never been called.";
 }
+
+
+/////////////////////////////////////////////////////////////////////////
+// Fixture uses Google Mock's MockChatProvider to test ChatProvider
+
+using ::testing::NiceMock;
+using ::testing::_;
+
+int callback_call = 0;
+void mock_callback( bool* go_on, sync::SyncProvider* sync ) 
+{ 
+	++callback_call; 
+}
+
+class ChatProviderEnhancedTest : public ::testing::Test
+{
+protected:
+	NiceMock< MockSyncProvider > mock_sync;
+	ChatProviderSpy chat_spy;
+	MockChatProvider* mock_chat;
+	int message_input_count = 100;
+
+	virtual void SetUp( )
+	{
+		mock_chat = new NiceMock< MockChatProvider >( &mock_sync, mock_callback );
+	}
+
+	virtual void TearDown( )
+	{
+		callback_call = 0;
+		delete mock_chat;
+	}
+};
+
+TEST_F( ChatProviderEnhancedTest, TestGetUserInput )
+{
+	EXPECT_CALL( mock_sync, open_sync_objects( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( *mock_chat, input_user_name( ) ).Times( 1 );
+
+	mock_chat->start( );
+}
+
+TEST_F( ChatProviderEnhancedTest, TestCallCallback )
+{
+	EXPECT_CALL( mock_sync, open_sync_objects( ) ).WillRepeatedly( Return( true ) );
+	EXPECT_CALL( *mock_chat, create_message_pump( ) ).Times( 1 );
+
+	mock_chat->start( );
+}
+
+TEST_F( ChatProviderEnhancedTest, TestCallback )
+{
+	EXPECT_CALL( mock_sync, open_sync_objects( ) ).WillRepeatedly( Return( true ) );
+
+	mock_chat->start( );
+
+	EXPECT_TRUE( callback_call == 1 ) << "Callback call count is not equal to 1 !!!";
+}
+

@@ -5,7 +5,7 @@
 class ChatProvider
 {
 public:
-	explicit ChatProvider( sync::SyncProvider& sync );
+	explicit ChatProvider( sync::SyncProvider& sync, void( *message_pump )( bool* go_on, sync::SyncProvider* sync ) = nullptr );
 	virtual ~ChatProvider( );
 
 	// start chat
